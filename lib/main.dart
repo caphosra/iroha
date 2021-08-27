@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:iroha/checks-board/main.dart";
-import 'package:iroha/cooked-board/main.dart';
+import "package:iroha/cooked-board/main.dart";
 import "package:iroha/home/main.dart";
-import 'package:iroha/system/check-data.dart';
+import "package:iroha/system/check-data.dart";
 
 final checkDataProvider = StateNotifierProvider.autoDispose<CheckDataList, List<CheckData>>((ref) {
 	ref.onDispose(() { });

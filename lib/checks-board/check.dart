@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
-import 'package:iroha/checks-board/check-button.dart';
-import 'package:iroha/checks-board/check-table.dart';
-import 'package:iroha/system/check-data.dart';
+import "package:iroha/checks-board/check-button.dart";
+import "package:iroha/checks-board/check-table.dart";
+import "package:iroha/system/check-data.dart";
 
 class IrohaCheck extends StatelessWidget {
     IrohaCheck({required this.data, Key? key}) : super(key: key);

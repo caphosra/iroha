@@ -1,5 +1,5 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:uuid/uuid.dart";
 
 class CheckFoodData {
 	CheckFoodData({required this.id, required this.count});
