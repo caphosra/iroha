@@ -4,7 +4,9 @@ import "package:iroha/checks-board/check.dart";
 import "package:iroha/main.dart";
 
 class IrohaChecksList extends ConsumerWidget {
-    IrohaChecksList({Key? key}) : super(key: key);
+    IrohaChecksList({required this.onAddButtonClicked, Key? key}) : super(key: key);
+
+	final void Function() onAddButtonClicked;
 
     @override
     Widget build(BuildContext context, ScopedReader watch) {
@@ -38,8 +40,4 @@ class IrohaChecksList extends ConsumerWidget {
 			]
 		);
     }
-
-	void onAddButtonClicked() {
-
-	}
 }
