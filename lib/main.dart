@@ -4,6 +4,7 @@ import "package:iroha/checks-board/main.dart";
 import "package:iroha/cooked-board/main.dart";
 import "package:iroha/home/main.dart";
 import "package:iroha/system/check-data.dart";
+import 'package:iroha/system/menu-item-data.dart';
 
 final checkDataProvider = StateNotifierProvider.autoDispose<CheckDataList, List<CheckData>>((ref) {
 	ref.onDispose(() { });
@@ -39,6 +40,17 @@ final checkDataProvider = StateNotifierProvider.autoDispose<CheckDataList, List<
 	);
 
 	return dataList;
+});
+
+final menuDataProvider = StateNotifierProvider.autoDispose<MenuData, List<String>>((ref) {
+	ref.onDispose(() { });
+
+	var data = MenuData();
+
+	data.add("パンケーキ");
+	data.add("コーヒー");
+
+	return data;
 });
 
 void main() {
