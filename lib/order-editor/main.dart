@@ -1,17 +1,17 @@
 import "package:flutter/material.dart";
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:iroha/main.dart';
+import "package:hooks_riverpod/hooks_riverpod.dart";
+import "package:iroha/main.dart";
 
-class IrohaCheckEditor extends StatefulWidget {
-	IrohaCheckEditor({Key? key}) : super(key: key);
-
+class IrohaOrderEditor extends StatefulWidget {
 	final Map<String, int> _menuItemCounter = <String, int>{ };
 
+	IrohaOrderEditor({Key? key}) : super(key: key);
+
 	@override
-    _IrohaCheckEditorState createState() => _IrohaCheckEditorState();
+    _IrohaOrderEditorState createState() => _IrohaOrderEditorState();
 }
 
-class _IrohaCheckEditorState extends State<IrohaCheckEditor> {
+class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
     @override
     Widget build(BuildContext context) {
         return ListView(

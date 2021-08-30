@@ -1,17 +1,17 @@
 import "dart:math";
 
 import "package:flutter/material.dart";
-import "package:iroha/check-editor/main.dart";
-import "package:iroha/checks-board/checks-list.dart";
+import "package:iroha/order-editor/main.dart";
+import "package:iroha/orders-board/orders-list.dart";
 
-class IrohaChecksBoard extends StatefulWidget {
-    IrohaChecksBoard({Key? key}) : super(key: key);
+class IrohaOrdersBoard extends StatefulWidget {
+    IrohaOrdersBoard({Key? key}) : super(key: key);
 
 	@override
-    _IrohaChecksBoardState createState() => _IrohaChecksBoardState();
+    _IrohaOrdersBoardState createState() => _IrohaOrdersBoardState();
 }
 
-class _IrohaChecksBoardState extends State<IrohaChecksBoard> {
+class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
 	bool editMode = false;
 
     @override
@@ -19,8 +19,8 @@ class _IrohaChecksBoardState extends State<IrohaChecksBoard> {
 		return Container(
 			width: min(MediaQuery.of(context).size.width, 600),
 			child: editMode
-				? IrohaCheckEditor()
-				: IrohaChecksList(
+				? IrohaOrderEditor()
+				: IrohaOrdersListView(
 					onAddButtonClicked: () => changeEditMode(true)
 				)
 		);

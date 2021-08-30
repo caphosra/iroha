@@ -1,46 +1,14 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:iroha/checks-board/main.dart";
 import "package:iroha/cooked-board/main.dart";
 import "package:iroha/home/main.dart";
-import "package:iroha/system/check-data.dart";
-import 'package:iroha/system/menu-item-data.dart';
+import "package:iroha/orders-board/main.dart";
+import "package:iroha/system/menu-item-data.dart";
+import "package:iroha/system/order.dart";
 
-final checkDataProvider = StateNotifierProvider.autoDispose<CheckDataList, List<CheckData>>((ref) {
-	ref.onDispose(() { });
-
-	var dataList = CheckDataList([]);
-	dataList.add(
-		1,
-		[
-			CheckFoodData(id: "パンケーキ", count: 5),
-			CheckFoodData(id: "コーヒー", count: 3)
-		]
-	);
-	dataList.add(
-		3,
-		[
-			CheckFoodData(id: "パンケーキ", count: 2),
-			CheckFoodData(id: "コーヒー", count: 4)
-		]
-	);
-	dataList.add(
-		4,
-		[
-			CheckFoodData(id: "パンケーキ", count: 2),
-			CheckFoodData(id: "コーヒー", count: 1)
-		]
-	);
-	dataList.add(
-		5,
-		[
-			CheckFoodData(id: "パンケーキ", count: 2),
-			CheckFoodData(id: "コーヒー", count: 3)
-		]
-	);
-
-	return dataList;
-});
+void main() {
+    runApp(IrohaApp());
+}
 
 final menuDataProvider = StateNotifierProvider.autoDispose<MenuData, List<String>>((ref) {
 	ref.onDispose(() { });
@@ -53,9 +21,41 @@ final menuDataProvider = StateNotifierProvider.autoDispose<MenuData, List<String
 	return data;
 });
 
-void main() {
-    runApp(IrohaApp());
-}
+final ordersProvider = StateNotifierProvider.autoDispose<IrohaOrderList, List<IrohaOrder>>((ref) {
+	ref.onDispose(() { });
+
+	var dataList = IrohaOrderList([]);
+	dataList.add(
+		1,
+		[
+			IrohaNumberOfFoods(id: "パンケーキ", count: 5),
+			IrohaNumberOfFoods(id: "コーヒー", count: 3)
+		]
+	);
+	dataList.add(
+		3,
+		[
+			IrohaNumberOfFoods(id: "パンケーキ", count: 2),
+			IrohaNumberOfFoods(id: "コーヒー", count: 4)
+		]
+	);
+	dataList.add(
+		4,
+		[
+			IrohaNumberOfFoods(id: "パンケーキ", count: 2),
+			IrohaNumberOfFoods(id: "コーヒー", count: 1)
+		]
+	);
+	dataList.add(
+		5,
+		[
+			IrohaNumberOfFoods(id: "パンケーキ", count: 2),
+			IrohaNumberOfFoods(id: "コーヒー", count: 3)
+		]
+	);
+
+	return dataList;
+});
 
 class IrohaApp extends StatelessWidget {
     @override
@@ -81,9 +81,7 @@ class IrohaAppView extends StatefulWidget {
 }
 
 class _IrohaAppViewState extends State<IrohaAppView> {
-    int _selectedIndex = 0;
-
-	static List<BottomNavigationBarItem> _bottomItems = const [
+    static List<BottomNavigationBarItem> _bottomItems = const [
 		BottomNavigationBarItem(
 			icon: Icon(Icons.home),
 			label: "ホーム"
@@ -98,17 +96,13 @@ class _IrohaAppViewState extends State<IrohaAppView> {
 		)
 	];
 
-    static List<Widget> _widgetOptions = [
+	static List<Widget> _widgetOptions = [
         IrohaHome(),
-        IrohaChecksBoard(),
+        IrohaOrdersBoard(),
         IrohaCookedBoard(),
     ];
 
-    void _onItemTapped(int index) {
-        setState(() {
-            _selectedIndex = index;
-        });
-    }
+    int _selectedIndex = 0;
 
     @override
     Widget build(BuildContext context) {
@@ -145,5 +139,11 @@ class _IrohaAppViewState extends State<IrohaAppView> {
 			),
 			backgroundColor: Colors.white
         );
+    }
+
+    void _onItemTapped(int index) {
+        setState(() {
+            _selectedIndex = index;
+        });
     }
 }

@@ -1,16 +1,16 @@
 import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
-import "package:iroha/checks-board/check.dart";
 import "package:iroha/main.dart";
+import "package:iroha/orders-board/order-view.dart";
 
-class IrohaChecksList extends ConsumerWidget {
-    IrohaChecksList({required this.onAddButtonClicked, Key? key}) : super(key: key);
+class IrohaOrdersListView extends ConsumerWidget {
+    final void Function() onAddButtonClicked;
 
-	final void Function() onAddButtonClicked;
+	IrohaOrdersListView({required this.onAddButtonClicked, Key? key}) : super(key: key);
 
     @override
     Widget build(BuildContext context, ScopedReader watch) {
-		var checkDataList = watch(checkDataProvider);
+		var orders = watch(ordersProvider);
 
 		return Stack(
 			children: [
@@ -24,8 +24,8 @@ class IrohaChecksList extends ConsumerWidget {
 								)
 							)
 						),
-						...checkDataList.map((data) =>
-							IrohaCheck(data: data)
+						...orders.map((data) =>
+							IrohaOrderView(data: data)
 						).toList()
 					]
 				),

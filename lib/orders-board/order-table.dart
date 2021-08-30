@@ -1,10 +1,10 @@
 import "package:flutter/material.dart";
-import "package:iroha/system/check-data.dart";
+import "package:iroha/system/order.dart";
 
-class IrohaCheckTable extends StatelessWidget {
-	IrohaCheckTable({required this.data, Key? key}) : super(key: key);
+class IrohaOrderTable extends StatelessWidget {
+	final IrohaOrder data;
 
-	final CheckData data;
+	IrohaOrderTable({required this.data, Key? key}) : super(key: key);
 
 	@override
 	Widget build(BuildContext context) {

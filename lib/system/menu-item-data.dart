@@ -1,4 +1,4 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import "package:hooks_riverpod/hooks_riverpod.dart";
 
 class MenuData extends StateNotifier<List<String>> {
 	MenuData([List<String>? initial]) : super(initial ?? []);

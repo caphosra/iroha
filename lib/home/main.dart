@@ -13,21 +13,6 @@ class _IrohaHomeState extends State<IrohaHome> with SingleTickerProviderStateMix
 	late AnimationController _animationController;
 
 	@override
-	void initState() {
-    	_animationController = AnimationController(
-			vsync: this,
-			duration: const Duration(milliseconds: 5000)
-		);
-
-		_animationController
-			.drive(CurveTween(curve: Curves.easeOutCirc));
-
-		_animationController.repeat(reverse: true);
-
-		super.initState();
-  	}
-
-	@override
     Widget build(BuildContext context) {
         return Center(
 			child: Column(
@@ -54,4 +39,19 @@ class _IrohaHomeState extends State<IrohaHome> with SingleTickerProviderStateMix
 
 		super.dispose();
 	}
+
+	@override
+	void initState() {
+    	_animationController = AnimationController(
+			vsync: this,
+			duration: const Duration(milliseconds: 5000)
+		);
+
+		_animationController
+			.drive(CurveTween(curve: Curves.easeOutCirc));
+
+		_animationController.repeat(reverse: true);
+
+		super.initState();
+  	}
 }

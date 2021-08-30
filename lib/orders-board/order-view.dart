@@ -1,12 +1,12 @@
 import "package:flutter/material.dart";
-import "package:iroha/checks-board/check-button.dart";
-import "package:iroha/checks-board/check-table.dart";
-import "package:iroha/system/check-data.dart";
+import "package:iroha/orders-board/order-button.dart";
+import "package:iroha/orders-board/order-table.dart";
+import "package:iroha/system/order.dart";
 
-class IrohaCheck extends StatelessWidget {
-    IrohaCheck({required this.data, Key? key}) : super(key: key);
+class IrohaOrderView extends StatelessWidget {
+    final IrohaOrder data;
 
-	final CheckData data;
+	IrohaOrderView({required this.data, Key? key}) : super(key: key);
 
     @override
     Widget build(BuildContext context) {
@@ -26,42 +26,32 @@ class IrohaCheck extends StatelessWidget {
 		);
     }
 
-	Widget _buildContent(BuildContext context) {
-		return Column(
-			mainAxisAlignment: MainAxisAlignment.start,
-			children: <Widget>[
-				Text(
-					"${data.tableNumber}番テーブル",
-					style: TextStyle(
-						fontSize: 25
-					)
-				),
-				Container(
-					margin: EdgeInsets.all(10),
-					height: 2,
-					color: Colors.blue
-				),
-				IrohaCheckTable(data: data),
-				Container(
-					margin: EdgeInsets.all(10),
-					height: 2,
-					color: Colors.blue
-				),
-				Row(
-					children: [
-						IrohaCheckButton(
-							icon: Icons.check,
-							color: Colors.green.shade400,
-							onPressed: () => onDoneButtonClicked(context)
-						),
-						IrohaCheckButton(
-							icon: Icons.delete,
-							color: Colors.red.shade400,
-							onPressed: () => onDeleteButtonClicked(context)
-						)
+	void onDeleteButtonClicked(BuildContext context) {
+		Widget cancelButton = TextButton(
+			child: Text("やっぱりやめる"),
+			onPressed:  () {
+				Navigator.of(context).pop();
+			},
+		);
+		Widget continueButton = TextButton(
+			child: Text("もちろん"),
+			onPressed:  () {
+				Navigator.of(context).pop();
+			},
+		);
+
+		showDialog(
+			context: context,
+			builder: (BuildContext ctx) {
+				return AlertDialog(
+					title: Text("確認"),
+					content: Text("本当にこの注文を削除しますか?"),
+					actions: [
+						cancelButton,
+						continueButton,
 					]
-				)
-			]
+				);
+			}
 		);
 	}
 
@@ -94,32 +84,42 @@ class IrohaCheck extends StatelessWidget {
 		);
 	}
 
-	void onDeleteButtonClicked(BuildContext context) {
-		Widget cancelButton = TextButton(
-			child: Text("やっぱりやめる"),
-			onPressed:  () {
-				Navigator.of(context).pop();
-			},
-		);
-		Widget continueButton = TextButton(
-			child: Text("もちろん"),
-			onPressed:  () {
-				Navigator.of(context).pop();
-			},
-		);
-
-		showDialog(
-			context: context,
-			builder: (BuildContext ctx) {
-				return AlertDialog(
-					title: Text("確認"),
-					content: Text("本当にこの注文を削除しますか?"),
-					actions: [
-						cancelButton,
-						continueButton,
+	Widget _buildContent(BuildContext context) {
+		return Column(
+			mainAxisAlignment: MainAxisAlignment.start,
+			children: <Widget>[
+				Text(
+					"${data.tableNumber}番テーブル",
+					style: TextStyle(
+						fontSize: 25
+					)
+				),
+				Container(
+					margin: EdgeInsets.all(10),
+					height: 2,
+					color: Colors.blue
+				),
+				IrohaOrderTable(data: data),
+				Container(
+					margin: EdgeInsets.all(10),
+					height: 2,
+					color: Colors.blue
+				),
+				Row(
+					children: [
+						IrohaOrderButton(
+							icon: Icons.check,
+							color: Colors.green.shade400,
+							onPressed: () => onDoneButtonClicked(context)
+						),
+						IrohaOrderButton(
+							icon: Icons.delete,
+							color: Colors.red.shade400,
+							onPressed: () => onDeleteButtonClicked(context)
+						)
 					]
-				);
-			}
+				)
+			]
 		);
 	}
 }
