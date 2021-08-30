@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
+import "package:iroha/foods-table/main.dart";
 import "package:iroha/orders-board/order-button.dart";
-import "package:iroha/orders-board/order-table.dart";
 import "package:iroha/system/order.dart";
 
 class IrohaOrderView extends StatelessWidget {
@@ -99,7 +99,18 @@ class IrohaOrderView extends StatelessWidget {
 					height: 2,
 					color: Colors.blue
 				),
-				IrohaOrderTable(data: data),
+				IrohaFoodsTable(
+					data: data.foods,
+					foodNameFromItem: (IrohaNumberOfFoods food) {
+						return food.id;
+					},
+					counterFromItem: (IrohaNumberOfFoods food) {
+						return Text(
+							food.count.toString(),
+							style: TextStyle(fontSize: 25)
+						);
+					}
+				),
 				Container(
 					margin: EdgeInsets.all(10),
 					height: 2,

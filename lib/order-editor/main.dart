@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
+import "package:iroha/foods-table/main.dart";
 import "package:iroha/main.dart";
 
 class IrohaOrderEditor extends StatefulWidget {
@@ -42,53 +43,31 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 									}
 								}
 
-								return DataTable(
-									columns: [
-										DataColumn(
-											label: Text(
-												"料理",
-												style: TextStyle(fontSize: 20)
-											)
-										),
-										DataColumn(
-											label: Text(
-												"個数",
-												style: TextStyle(fontSize: 20)
-											)
-										)
-									],
-									rows: menu.map((menuItem) =>
-										DataRow(
-											cells: [
-												DataCell(
-													Text(
-														menuItem,
-														style: TextStyle(fontSize: 25)
+								return IrohaFoodsTable(
+									data: menu,
+									foodNameFromItem: (String item) {
+										return item;
+									},
+									counterFromItem: (String item) {
+										return DropdownButton<int>(
+											value: widget._menuItemCounter[item],
+											items: [
+												for (int i = 0; i <= 5; i++)
+													DropdownMenuItem(
+														child: Text(
+															i.toString(),
+															style: TextStyle(fontSize: 25)
+														),
+														value: i,
 													)
-												),
-												DataCell(
-													DropdownButton<int>(
-														value: widget._menuItemCounter[menuItem],
-														items: [
-															for (int i = 0; i <= 5; i++)
-																DropdownMenuItem(
-																	child: Text(
-																		i.toString(),
-																		style: TextStyle(fontSize: 25)
-																	),
-																	value: i,
-																)
-														],
-														onChanged: (value) {
-															setState(() {
-																widget._menuItemCounter[menuItem] = value ?? 0;
-															});
-														}
-													)
-												)
-											]
-										)
-									).toList()
+											],
+											onChanged: (value) {
+												setState(() {
+													widget._menuItemCounter[item] = value ?? 0;
+												});
+											}
+										);
+									}
 								);
 							}
 						)

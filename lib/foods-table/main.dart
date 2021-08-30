@@ -1,10 +1,17 @@
 import "package:flutter/material.dart";
 import "package:iroha/system/order.dart";
 
-class IrohaOrderTable extends StatelessWidget {
-	final IrohaOrder data;
+class IrohaFoodsTable<T> extends StatelessWidget {
+	final List<T> data;
+	final String Function(T) foodNameFromItem;
+	final Widget Function(T) counterFromItem;
 
-	IrohaOrderTable({required this.data, Key? key}) : super(key: key);
+	IrohaFoodsTable({
+		required this.data,
+		required this.foodNameFromItem,
+		required this.counterFromItem,
+		Key? key
+	}) : super(key: key);
 
 	@override
 	Widget build(BuildContext context) {
@@ -23,20 +30,17 @@ class IrohaOrderTable extends StatelessWidget {
 					)
 				)
 			],
-			rows: data.foods.map((food) =>
+			rows: data.map((item) =>
 				DataRow(
 					cells: [
 						DataCell(
 							Text(
-								food.id,
+								foodNameFromItem(item),
 								style: TextStyle(fontSize: 25)
 							)
 						),
 						DataCell(
-							Text(
-								"${food.count}個",
-								style: TextStyle(fontSize: 25)
-							)
+							counterFromItem(item)
 						)
 					]
 				)
