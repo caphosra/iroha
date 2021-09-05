@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:iroha/system/order.dart";
 
 class IrohaFoodsTable<T> extends StatelessWidget {
 	final List<T> data;
