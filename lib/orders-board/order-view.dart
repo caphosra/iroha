@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:iroha/foods-table/main.dart";
 import "package:iroha/orders-board/order-button.dart";
 import "package:iroha/system/order.dart";
+import 'package:tuple/tuple.dart';
 
 class IrohaOrderView extends StatelessWidget {
     final IrohaOrder data;
@@ -100,13 +101,15 @@ class IrohaOrderView extends StatelessWidget {
 					color: Colors.blue
 				),
 				IrohaFoodsTable(
-					data: data.foods,
-					foodNameFromItem: (IrohaNumberOfFoods food) {
-						return food.id;
+					data: data.foods.entries
+						.map((item) => Tuple2(item.key, item.value))
+						.toList(),
+					foodNameFromItem: (Tuple2<String, int> food) {
+						return food.item1;
 					},
-					counterFromItem: (IrohaNumberOfFoods food) {
+					counterFromItem: (Tuple2<String, int> food) {
 						return Text(
-							food.count.toString(),
+							food.item2.toString(),
 							style: TextStyle(fontSize: 25)
 						);
 					}

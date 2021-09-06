@@ -1,12 +1,7 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:uuid/uuid.dart";
 
-class IrohaNumberOfFoods {
-	final String id;
-	final int count;
-
-	IrohaNumberOfFoods({required this.id, required this.count});
-}
+typedef IrohaMenuID = String;
 
 class IrohaOrder {
 	final String id;
@@ -15,7 +10,7 @@ class IrohaOrder {
 	DateTime? cooked;
 	DateTime? served;
 	DateTime? paid;
-	final List<IrohaNumberOfFoods> foods;
+	final Map<IrohaMenuID, int> foods;
 
 	IrohaOrder({required this.id, required this.tableNumber, required this.foods});
 
@@ -39,7 +34,7 @@ class IrohaOrder {
 class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 	IrohaOrderList([List<IrohaOrder>? initial]) : super(initial ?? []);
 
-	void add(int tableNumber, List<IrohaNumberOfFoods> foods) {
+	void addOrder(int tableNumber, Map<IrohaMenuID, int> foods) {
 		var uuid = Uuid().v4();
 		state = [
 			...state,
