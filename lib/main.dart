@@ -10,7 +10,7 @@ void main() {
     runApp(IrohaApp());
 }
 
-final menuDataProvider = StateNotifierProvider.autoDispose<MenuData, List<String>>((ref) {
+final menuDataProvider = StateNotifierProvider<MenuData, List<String>>((ref) {
 	ref.onDispose(() { });
 
 	var data = MenuData();
@@ -21,38 +21,10 @@ final menuDataProvider = StateNotifierProvider.autoDispose<MenuData, List<String
 	return data;
 });
 
-final ordersProvider = StateNotifierProvider.autoDispose<IrohaOrderList, List<IrohaOrder>>((ref) {
+final ordersProvider = StateNotifierProvider<IrohaOrderList, List<IrohaOrder>>((ref) {
 	ref.onDispose(() { });
 
 	var dataList = IrohaOrderList([]);
-	dataList.add(
-		1,
-		[
-			IrohaNumberOfFoods(id: "パンケーキ", count: 5),
-			IrohaNumberOfFoods(id: "コーヒー", count: 3)
-		]
-	);
-	dataList.add(
-		3,
-		[
-			IrohaNumberOfFoods(id: "パンケーキ", count: 2),
-			IrohaNumberOfFoods(id: "コーヒー", count: 4)
-		]
-	);
-	dataList.add(
-		4,
-		[
-			IrohaNumberOfFoods(id: "パンケーキ", count: 2),
-			IrohaNumberOfFoods(id: "コーヒー", count: 1)
-		]
-	);
-	dataList.add(
-		5,
-		[
-			IrohaNumberOfFoods(id: "パンケーキ", count: 2),
-			IrohaNumberOfFoods(id: "コーヒー", count: 3)
-		]
-	);
 
 	return dataList;
 });
