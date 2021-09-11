@@ -1,3 +1,5 @@
+import "dart:math";
+
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:iroha/cooked-board/main.dart";
@@ -80,7 +82,14 @@ class _IrohaAppViewState extends State<IrohaAppView> {
     Widget build(BuildContext context) {
         return Scaffold(
             body: Center(
-                child: _widgetOptions.elementAt(_selectedIndex),
+                child: _widgetOptions
+					.map((widget) {
+						return Container(
+							width: min(MediaQuery.of(context).size.width, 500),
+							child: widget
+						);
+					})
+					.elementAt(_selectedIndex),
             ),
 			extendBody: true,
             bottomNavigationBar: Container(

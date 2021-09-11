@@ -1,8 +1,6 @@
-import "dart:math";
-
 import "package:flutter/material.dart";
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:iroha/main.dart';
+import "package:hooks_riverpod/hooks_riverpod.dart";
+import "package:iroha/main.dart";
 import "package:iroha/order-editor/main.dart";
 import "package:iroha/orders-board/orders-list.dart";
 
@@ -18,11 +16,8 @@ class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
 
 	@override
     Widget build(BuildContext context) {
-		return Container(
-			width: min(MediaQuery.of(context).size.width, 600),
-			child: IrohaOrdersListView(
-				onAddButtonClicked: () => _changeEditMode(context)
-			)
+		return IrohaOrdersListView(
+			onAddButtonClicked: () => _changeEditMode(context)
 		);
     }
 
