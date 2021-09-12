@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
 import "package:iroha/main.dart";
-import "package:iroha/order-editor/main.dart";
-import "package:iroha/orders-board/orders-list.dart";
+import "package:iroha/widgets/order-editor.dart";
+import "package:iroha/widgets/orders-board/orders-list.dart";
 
 class IrohaOrdersBoard extends StatefulWidget {
     IrohaOrdersBoard({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
 import "package:iroha/main.dart";
-import "package:iroha/orders-board/order-view.dart";
+import "package:iroha/widgets/orders-board/order-view.dart";
 
 class IrohaOrdersListView extends ConsumerWidget {
     final void Function() onAddButtonClicked;

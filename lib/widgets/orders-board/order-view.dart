@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
-import "package:iroha/foods-table/main.dart";
-import "package:iroha/orders-board/order-button.dart";
-import "package:iroha/system/order.dart";
+import "package:iroha/widgets/foods-table.dart";
+import "package:iroha/widgets/orders-board/order-button.dart";
+import "package:iroha/models/order.dart";
 import "package:tuple/tuple.dart";
 
 class IrohaOrderView extends StatelessWidget {

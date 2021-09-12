@@ -2,12 +2,12 @@ import "dart:math";
 
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:iroha/bottom-bar.dart";
-import "package:iroha/cooked-board/main.dart";
-import "package:iroha/home/main.dart";
-import "package:iroha/orders-board/main.dart";
-import "package:iroha/system/menu-item-data.dart";
-import "package:iroha/system/order.dart";
+import "package:iroha/widgets/bottom-bar.dart";
+import "package:iroha/widgets/cooked-board/main.dart";
+import "package:iroha/widgets/home/main.dart";
+import "package:iroha/widgets/orders-board/main.dart";
+import "package:iroha/models/menu-item-data.dart";
+import "package:iroha/models/order.dart";
 import "package:tuple/tuple.dart";
 
 void main() {

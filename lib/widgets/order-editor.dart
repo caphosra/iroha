@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
-import "package:iroha/foods-table/main.dart";
+import "package:iroha/widgets/foods-table.dart";
 import "package:iroha/main.dart";
 
 class IrohaOrderEditor extends StatefulWidget {
@@ -17,11 +17,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 
     @override
     Widget build(BuildContext context) {
-        return _buildContent(context);
-    }
-
-	Widget _buildContent(BuildContext context) {
-		return Column(
+        return Column(
 			mainAxisAlignment: MainAxisAlignment.start,
 			mainAxisSize: MainAxisSize.min,
 			children: <Widget>[
@@ -46,7 +42,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 				)
 			]
 		);
-	}
+    }
 
 	Widget _buildFoodsTable(BuildContext context, ScopedReader watch, Widget? child) {
 		var menu = watch(menuDataProvider);

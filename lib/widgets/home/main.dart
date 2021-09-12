@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
-import "package:iroha/home/logo.dart";
-import "package:iroha/home/status.dart";
+import "package:iroha/widgets/home/logo.dart";
+import "package:iroha/widgets/home/status.dart";
 
 class IrohaHome extends StatefulWidget {
     IrohaHome({Key? key}) : super(key: key);
