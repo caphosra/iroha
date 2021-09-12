@@ -2,11 +2,13 @@ import "dart:math";
 
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:iroha/bottom-bar.dart";
 import "package:iroha/cooked-board/main.dart";
 import "package:iroha/home/main.dart";
 import "package:iroha/orders-board/main.dart";
 import "package:iroha/system/menu-item-data.dart";
 import "package:iroha/system/order.dart";
+import "package:tuple/tuple.dart";
 
 void main() {
     runApp(IrohaApp());
@@ -55,19 +57,10 @@ class IrohaAppView extends StatefulWidget {
 }
 
 class _IrohaAppViewState extends State<IrohaAppView> {
-    static List<BottomNavigationBarItem> _bottomItems = const [
-		BottomNavigationBarItem(
-			icon: Icon(Icons.home),
-			label: "ホーム"
-		),
-		BottomNavigationBarItem(
-			icon: Icon(Icons.comment),
-			label: "注文"
-		),
-		BottomNavigationBarItem(
-			icon: Icon(Icons.emoji_food_beverage),
-			label: "調理"
-		)
+    static List<Tuple2<String, IconData>> items = const [
+		Tuple2("ホーム", Icons.home),
+		Tuple2("注文", Icons.comment),
+		Tuple2("調理", Icons.emoji_food_beverage),
 	];
 
 	static List<Widget> _widgetOptions = [
@@ -92,37 +85,15 @@ class _IrohaAppViewState extends State<IrohaAppView> {
 					.elementAt(_selectedIndex),
             ),
 			extendBody: true,
-            bottomNavigationBar: Container(
-				decoration: BoxDecoration(
-					boxShadow: [
-						BoxShadow(color: Colors.black26, spreadRadius: 5, blurRadius: 20)
-					]
-				),
-				child: ClipRRect(
-					borderRadius: BorderRadius.only(
-						topLeft: Radius.circular(20),
-						topRight: Radius.circular(20)
-					),
-					child: BottomNavigationBar(
-						items: _bottomItems,
-						currentIndex: _selectedIndex,
-						type: BottomNavigationBarType.fixed,
-						selectedIconTheme: IconThemeData(size: 40),
-						selectedFontSize: 20,
-						selectedItemColor: Colors.orange,
-						unselectedIconTheme: IconThemeData(size: 40),
-						unselectedFontSize: 20,
-						unselectedItemColor: Colors.blue,
-						backgroundColor: Colors.white,
-						onTap: _onItemTapped
-					)
-				)
+            bottomNavigationBar: IrohaBottomBar(
+				items: items,
+				onSelected: _onSelected
 			),
 			backgroundColor: Colors.white
         );
     }
 
-    void _onItemTapped(int index) {
+    void _onSelected(int index) {
         setState(() {
             _selectedIndex = index;
         });
