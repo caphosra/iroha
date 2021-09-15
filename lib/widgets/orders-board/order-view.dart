@@ -7,11 +7,12 @@ import "package:iroha/models/order.dart";
 import "package:tuple/tuple.dart";
 
 class IrohaOrderView extends StatelessWidget {
-    final IrohaOrder data;
+	final IrohaOrder data;
+	final void Function() onListChanged;
 
-	IrohaOrderView({required this.data, Key? key}) : super(key: key);
+	IrohaOrderView({required this.data, required this.onListChanged, Key? key}) : super(key: key);
 
-    @override
+	@override
     Widget build(BuildContext context) {
         return Container(
 			decoration: BoxDecoration(
@@ -29,7 +30,7 @@ class IrohaOrderView extends StatelessWidget {
 		);
     }
 
-	void onDeleteButtonClicked(BuildContext context) {
+	void _onDeleteButtonClicked(BuildContext context) {
 		Widget cancelButton = TextButton(
 			child: Text("やっぱりやめる"),
 			onPressed:  () {
@@ -41,8 +42,12 @@ class IrohaOrderView extends StatelessWidget {
 				return TextButton(
 					child: Text("もちろん"),
 					onPressed:  () {
-						context.read(ordersProvider.notifier).delete(data.id);
+						context
+							.read(ordersProvider.notifier)
+							.delete(data.id);
 						Navigator.of(context).pop();
+
+						onListChanged();
 					}
 				);
 			}
@@ -63,7 +68,7 @@ class IrohaOrderView extends StatelessWidget {
 		);
 	}
 
-	void onDoneButtonClicked(BuildContext context) {
+	void _onDoneButtonClicked(BuildContext context) {
 		Widget cancelButton = TextButton(
 			child: Text("やっぱりやめる"),
 			onPressed:  () {
@@ -75,8 +80,12 @@ class IrohaOrderView extends StatelessWidget {
 				return TextButton(
 					child: Text("もちろん"),
 					onPressed:  () {
-						context.read(ordersProvider.notifier).markAsCooked(data.id, DateTime.now());
+						context
+							.read(ordersProvider.notifier)
+							.markAsCooked(data.id, DateTime.now());
 						Navigator.of(context).pop();
+
+						onListChanged();
 					}
 				);
 			}
@@ -136,12 +145,12 @@ class IrohaOrderView extends StatelessWidget {
 						IrohaOrderButton(
 							icon: Icons.check,
 							color: Colors.green.shade400,
-							onPressed: () => onDoneButtonClicked(context)
+							onPressed: () => _onDoneButtonClicked(context)
 						),
 						IrohaOrderButton(
 							icon: Icons.delete,
 							color: Colors.red.shade400,
-							onPressed: () => onDeleteButtonClicked(context)
+							onPressed: () => _onDeleteButtonClicked(context)
 						)
 					]
 				)
