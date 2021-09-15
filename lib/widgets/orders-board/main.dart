@@ -56,7 +56,7 @@ class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
 	}
 
 	void _onAddButtonClicked(BuildContext context, ScopedReader watch) {
-		context.read(ordersProvider.notifier).addOrder(1, _menuItemCounter);
+		context.read(ordersProvider.notifier).add(1, _menuItemCounter);
 
 		Navigator.pop(context);
 	}

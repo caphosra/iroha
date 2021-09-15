@@ -12,6 +12,14 @@ class IrohaOrdersListView extends ConsumerWidget {
     Widget build(BuildContext context, ScopedReader watch) {
 		var orders = watch(ordersProvider);
 
+		var ordersWidgets = orders
+			.where((data) =>
+				data.cooked == null
+			)
+			.map((data) =>
+				IrohaOrderView(data: data)
+			).toList();
+
 		return Stack(
 			children: [
 				ListView(
@@ -24,9 +32,7 @@ class IrohaOrdersListView extends ConsumerWidget {
 								)
 							)
 						),
-						...orders.map((data) =>
-							IrohaOrderView(data: data)
-						).toList()
+						...ordersWidgets
 					]
 				),
 				Positioned(

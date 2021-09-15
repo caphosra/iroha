@@ -1,4 +1,6 @@
 import "package:flutter/material.dart";
+import "package:hooks_riverpod/hooks_riverpod.dart";
+import "package:iroha/main.dart";
 import "package:iroha/widgets/foods-table.dart";
 import "package:iroha/widgets/orders-board/order-button.dart";
 import "package:iroha/models/order.dart";
@@ -34,11 +36,16 @@ class IrohaOrderView extends StatelessWidget {
 				Navigator.of(context).pop();
 			},
 		);
-		Widget continueButton = TextButton(
-			child: Text("もちろん"),
-			onPressed:  () {
-				Navigator.of(context).pop();
-			},
+		Widget continueButton = Consumer(
+			builder: (context, watch, child) {
+				return TextButton(
+					child: Text("もちろん"),
+					onPressed:  () {
+						context.read(ordersProvider.notifier).delete(data.id);
+						Navigator.of(context).pop();
+					}
+				);
+			}
 		);
 
 		showDialog(
@@ -63,11 +70,16 @@ class IrohaOrderView extends StatelessWidget {
 				Navigator.of(context).pop();
 			},
 		);
-		Widget continueButton = TextButton(
-			child: Text("もちろん"),
-			onPressed:  () {
-				Navigator.of(context).pop();
-			},
+		Widget continueButton = Consumer(
+			builder: (context, watch, child) {
+				return TextButton(
+					child: Text("もちろん"),
+					onPressed:  () {
+						context.read(ordersProvider.notifier).markAsCooked(data.id, DateTime.now());
+						Navigator.of(context).pop();
+					}
+				);
+			}
 		);
 
 		showDialog(
