@@ -1,29 +1,23 @@
+import "dart:async";
 import "dart:math";
 
-import "package:flutter/material.dart";
+import "package:firebase_core/firebase_core.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:flutter/material.dart";
+import "package:iroha/models/order.dart";
 import "package:iroha/widgets/bottom-bar.dart";
 import "package:iroha/widgets/cooked-board/main.dart";
 import "package:iroha/widgets/home/main.dart";
 import "package:iroha/widgets/orders-board/main.dart";
-import "package:iroha/models/menu-item-data.dart";
-import "package:iroha/models/order.dart";
 import "package:tuple/tuple.dart";
 
-void main() {
+Future<void> main() async {
+	WidgetsFlutterBinding.ensureInitialized();
+
+	await Firebase.initializeApp();
+
     runApp(IrohaApp());
 }
-
-final menuDataProvider = StateNotifierProvider<MenuData, List<String>>((ref) {
-	ref.onDispose(() { });
-
-	var data = MenuData();
-
-	data.add("パンケーキ");
-	data.add("コーヒー");
-
-	return data;
-});
 
 final ordersProvider = StateNotifierProvider<IrohaOrderList, List<IrohaOrder>>((ref) {
 	ref.onDispose(() { });
