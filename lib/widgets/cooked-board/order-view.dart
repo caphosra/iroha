@@ -82,7 +82,7 @@ class IrohaOrderView extends StatelessWidget {
 					onPressed:  () {
 						context
 							.read(ordersProvider.notifier)
-							.markAsServed(data.id, DateTime.now());
+							.markAs(data.id, IrohaOrderStatus.SERVED, DateTime.now());
 						Navigator.of(context).pop();
 
 						onListChanged();

@@ -23,6 +23,7 @@ final ordersProvider = StateNotifierProvider<IrohaOrderList, List<IrohaOrder>>((
 	ref.onDispose(() { });
 
 	var dataList = IrohaOrderList([]);
+	dataList.update();
 
 	return dataList;
 });

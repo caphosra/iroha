@@ -16,20 +16,21 @@ class IrohaOrder {
 
 	IrohaOrder({required this.id, required this.posted, required this.tableNumber, required this.foods});
 
-	void markAsCooked(DateTime time) {
- 		this.cooked = time;
-	}
-
-	void markAsPaid(DateTime time) {
- 		this.paid = time;
-	}
-
-	void markAsPosted(DateTime time) {
- 		this.posted = time;
-	}
-
-	void markAsServed(DateTime time) {
- 		this.served = time;
+	void markAs(IrohaOrderStatus status, DateTime time) {
+		switch (status) {
+			case IrohaOrderStatus.POSTED:
+				posted = time;
+				break;
+			case IrohaOrderStatus.COOKED:
+				cooked = time;
+				break;
+			case IrohaOrderStatus.SERVED:
+				served = time;
+				break;
+			case IrohaOrderStatus.PAID:
+				paid = time;
+				break;
+		}
 	}
 
 	Map<dynamic, dynamic> toJson() {
@@ -61,6 +62,13 @@ class IrohaOrder {
 	}
 }
 
+enum IrohaOrderStatus {
+	POSTED,
+	COOKED,
+	SERVED,
+	PAID
+}
+
 class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 	IrohaOrderList([List<IrohaOrder>? initial]) : super(initial ?? []);
 
@@ -74,63 +82,26 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 		);
 		final ref = FirebaseDatabase.instance.reference();
 		ref.child("orders").child(uuid).set(order.toJson());
-		state = await _update();
+
+		update();
 	}
 
 	Future<void> delete(String id) async {
 		final ref = FirebaseDatabase.instance.reference();
 		ref.child("orders").child(id).remove();
-		state = await _update();
+
+		update();
 	}
 
-	bool markAsCooked(String id, DateTime time) {
-		var index = state.indexWhere((order) => order.id == id);
-		if (index == -1) {
-			return false;
-		}
-		else {
-			state[index].markAsCooked(time);
-			return true;
-		}
+	Future<void> update() async {
+		state = await _downloadData();
 	}
 
-	bool markAsPaid(String id, DateTime time) {
- 		var index = state.indexWhere((order) => order.id == id);
-		if (index == -1) {
-			return false;
-		}
-		else {
-			state[index].markAsPaid(time);
-			return true;
-		}
-	}
-
-	bool markAsPosted(String id, DateTime time) {
- 		var index = state.indexWhere((order) => order.id == id);
-		if (index == -1) {
-			return false;
-		}
-		else {
-			state[index].markAsPosted(time);
-			return true;
-		}
-	}
-
-	bool markAsServed(String id, DateTime time) {
- 		var index = state.indexWhere((order) => order.id == id);
-		if (index == -1) {
-			return false;
-		}
-		else {
-			state[index].markAsServed(time);
-			return true;
-		}
-	}
-
-	Future<List<IrohaOrder>> _update() async {
+	Future<List<IrohaOrder>> _downloadData() async {
 		final ref = FirebaseDatabase.instance.reference();
 		final rawItems = await ref.child("orders").get();
 		final items = rawItems.value as Map<dynamic, dynamic>;
+
 		return await Future.wait(
 			items.entries
 				.map((order) async {
@@ -141,5 +112,19 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 				})
 				.toList()
 		);
+	}
+
+	Future<void> markAs(String id, IrohaOrderStatus status, DateTime time) async {
+		final ref = FirebaseDatabase.instance.reference();
+		var rawItems = await ref.child("orders").child(id).get();
+		final items = await IrohaOrder.fromJson(
+			id,
+			rawItems.value as Map<dynamic, dynamic>
+		);
+
+		items.markAs(status, time);
+		await ref.child("orders").child(id).set(items.toJson());
+
+		update();
 	}
 }
