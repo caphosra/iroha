@@ -19,16 +19,16 @@ class _IrohaOrdersListViewState extends State<IrohaOrdersListView> {
 			builder: (context, watch, child) {
 				var orders = watch(ordersProvider);
 
-			var ordersWidgets = orders
-				.where((data) =>
-					data.cooked == null
-				)
-				.map((data) =>
-					IrohaOrderView(
-						data: data,
-						onListChanged: onListChanged
+				var ordersWidgets = orders
+					.where((data) =>
+						data.cooked == null
 					)
-				).toList();
+					.map((data) =>
+						IrohaOrderView(
+							data: data,
+							onListChanged: onListChanged
+						)
+					).toList();
 
 				return Stack(
 					children: [

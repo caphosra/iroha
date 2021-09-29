@@ -82,19 +82,36 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 		);
 		final ref = FirebaseDatabase.instance.reference();
 		ref.child("orders").child(uuid).set(order.toJson());
-
-		update();
 	}
 
 	Future<void> delete(String id) async {
 		final ref = FirebaseDatabase.instance.reference();
 		ref.child("orders").child(id).remove();
-
-		update();
 	}
 
 	Future<void> update() async {
 		state = await _downloadData();
+	}
+
+	Future<void> markAs(String id, IrohaOrderStatus status, DateTime time) async {
+		final ref = FirebaseDatabase.instance.reference();
+		final rawItems = await ref.child("orders").child(id).get();
+		final items = await IrohaOrder.fromJson(
+			id,
+			rawItems.value as Map<dynamic, dynamic>
+		);
+
+		items.markAs(status, time);
+		await ref.child("orders").child(id).set(items.toJson());
+	}
+
+	Future<void> keepWatching() async {
+		final ref = FirebaseDatabase.instance.reference();
+		final stream = ref.child("orders").onValue;
+		await for (final event in stream) {
+			final items = event.snapshot.value as Map<dynamic, dynamic>;
+			state = await _toList(items);
+		}
 	}
 
 	Future<List<IrohaOrder>> _downloadData() async {
@@ -102,6 +119,10 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 		final rawItems = await ref.child("orders").get();
 		final items = rawItems.value as Map<dynamic, dynamic>;
 
+		return await _toList(items);
+	}
+
+	Future<List<IrohaOrder>> _toList(Map<dynamic, dynamic> items) async {
 		return await Future.wait(
 			items.entries
 				.map((order) async {
@@ -112,19 +133,5 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 				})
 				.toList()
 		);
-	}
-
-	Future<void> markAs(String id, IrohaOrderStatus status, DateTime time) async {
-		final ref = FirebaseDatabase.instance.reference();
-		var rawItems = await ref.child("orders").child(id).get();
-		final items = await IrohaOrder.fromJson(
-			id,
-			rawItems.value as Map<dynamic, dynamic>
-		);
-
-		items.markAs(status, time);
-		await ref.child("orders").child(id).set(items.toJson());
-
-		update();
 	}
 }

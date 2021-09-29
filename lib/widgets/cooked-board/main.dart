@@ -17,16 +17,16 @@ class _IrohaCookedBoardState extends State<IrohaCookedBoard> {
 			builder: (context, watch, child) {
 				var orders = watch(ordersProvider);
 
-			var ordersWidgets = orders
-				.where((data) =>
-					data.cooked != null && data.served == null
-				)
-				.map((data) =>
-					IrohaOrderView(
-						data: data,
-						onListChanged: onListChanged
+				var ordersWidgets = orders
+					.where((data) =>
+						data.cooked != null && data.served == null
 					)
-				).toList();
+					.map((data) =>
+						IrohaOrderView(
+							data: data,
+							onListChanged: onListChanged
+						)
+					).toList();
 
 				return Stack(
 					children: [
