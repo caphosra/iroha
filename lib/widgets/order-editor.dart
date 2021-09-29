@@ -31,10 +31,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 					height: 2,
 					color: Colors.blue
 				),
-				FutureBuilder(
-					future: MenuItems.get(),
-					builder: _buildFoodsTable
-				),
+				_buildFoodsTable(context),
 				Container(
 					margin: EdgeInsets.all(10),
 					height: 2,
@@ -44,49 +41,44 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 		);
     }
 
-	Widget _buildFoodsTable(BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-		if (snapshot.hasData) {
-			final menu = snapshot.data ?? [];
+	Widget _buildFoodsTable(BuildContext context) {
+		final menu = MenuItems.get();
 
-			if (_menuItemCounter.isEmpty) {
-				for (var counter = 0; counter < menu.length; counter++) {
-					_menuItemCounter[menu.elementAt(counter)] = 0;
-				}
-
-				widget.onOrderUpdated(_menuItemCounter);
+		if (_menuItemCounter.isEmpty) {
+			for (var counter = 0; counter < menu.length; counter++) {
+				_menuItemCounter[menu.elementAt(counter)] = 0;
 			}
 
-			return IrohaFoodsTable(
-				data: menu,
-				foodNameFromItem: (String item) {
-					return item;
-				},
-				counterFromItem: (String item) {
-					return DropdownButton<int>(
-						value: _menuItemCounter[item],
-						items: [
-							for (int i = 0; i <= 5; i++)
-								DropdownMenuItem(
-									child: Text(
-										i.toString(),
-										style: TextStyle(fontSize: 25)
-									),
-									value: i,
-								)
-						],
-						onChanged: (value) {
-							setState(() {
-								_menuItemCounter[item] = value ?? 0;
+			widget.onOrderUpdated(_menuItemCounter);
+		}
 
-								widget.onOrderUpdated(_menuItemCounter);
-							});
-						}
-					);
-				}
-			);
-		}
-		else {
-			return Container();
-		}
+		return IrohaFoodsTable(
+			data: menu,
+			foodNameFromItem: (String item) {
+				return item;
+			},
+			counterFromItem: (String item) {
+				return DropdownButton<int>(
+					value: _menuItemCounter[item],
+					items: [
+						for (int i = 0; i <= 5; i++)
+							DropdownMenuItem(
+								child: Text(
+									i.toString(),
+									style: TextStyle(fontSize: 25)
+								),
+								value: i,
+							)
+					],
+					onChanged: (value) {
+						setState(() {
+							_menuItemCounter[item] = value ?? 0;
+
+							widget.onOrderUpdated(_menuItemCounter);
+						});
+					}
+				);
+			}
+		);
 	}
 }

@@ -45,7 +45,7 @@ class IrohaOrder {
 		return json;
 	}
 
-	static Future<IrohaOrder> fromJson(String id, Map<dynamic, dynamic> json) async {
+	static IrohaOrder fromJson(String id, Map<dynamic, dynamic> json) {
 		var order = IrohaOrder(
 			id: id,
 			tableNumber: json["tableNumber"],
@@ -55,7 +55,7 @@ class IrohaOrder {
 		order.cooked = DateTime.tryParse(json["cooked"]);
 		order.served = DateTime.tryParse(json["served"]);
 		order.paid = DateTime.tryParse(json["paid"]);
-		for (final item in await MenuItems.get()) {
+		for (final item in MenuItems.get()) {
 			order.foods[item] = json[item];
 		}
 		return order;
@@ -96,7 +96,7 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 	Future<void> markAs(String id, IrohaOrderStatus status, DateTime time) async {
 		final ref = FirebaseDatabase.instance.reference();
 		final rawItems = await ref.child("orders").child(id).get();
-		final items = await IrohaOrder.fromJson(
+		final items = IrohaOrder.fromJson(
 			id,
 			rawItems.value as Map<dynamic, dynamic>
 		);
@@ -110,7 +110,7 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 		final stream = ref.child("orders").onValue;
 		await for (final event in stream) {
 			final items = event.snapshot.value as Map<dynamic, dynamic>;
-			state = await _toList(items);
+			state = _toList(items);
 		}
 	}
 
@@ -119,19 +119,17 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 		final rawItems = await ref.child("orders").get();
 		final items = rawItems.value as Map<dynamic, dynamic>;
 
-		return await _toList(items);
+		return _toList(items);
 	}
 
-	Future<List<IrohaOrder>> _toList(Map<dynamic, dynamic> items) async {
-		return await Future.wait(
-			items.entries
-				.map((order) async {
-					return await IrohaOrder.fromJson(
-						order.key,
-						order.value
-					);
-				})
-				.toList()
-		);
+	List<IrohaOrder> _toList(Map<dynamic, dynamic> items) {
+		return items.entries
+			.map((order) {
+				return IrohaOrder.fromJson(
+					order.key,
+					order.value
+				);
+			})
+			.toList();
 	}
 }
