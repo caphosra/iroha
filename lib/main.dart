@@ -4,6 +4,7 @@ import "dart:math";
 import "package:firebase_core/firebase_core.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
+import "package:iroha/models/config.dart";
 import "package:iroha/models/menu-items.dart";
 import "package:iroha/models/order.dart";
 import "package:iroha/widgets/bottom-bar.dart";
@@ -17,6 +18,7 @@ Future<void> main() async {
 
 	await Firebase.initializeApp();
 	await MenuItems.update();
+	await IrohaConfig.update();
 
     runApp(IrohaApp());
 }

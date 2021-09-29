@@ -12,6 +12,7 @@ class IrohaOrdersBoard extends StatefulWidget {
 }
 
 class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
+	int _tableNumber = 1;
     Map<String, int> _menuItemCounter = <String, int>{ };
 
 	@override
@@ -51,12 +52,18 @@ class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
 		);
 	}
 
-	void _onOrderUpdated(Map<String, int> order) {
+	void _onOrderUpdated(int tableNumber, Map<String, int> order) {
+		_tableNumber = tableNumber;
 		_menuItemCounter = order;
 	}
 
 	void _onAddButtonClicked(BuildContext context, ScopedReader watch) {
-		context.read(ordersProvider.notifier).add(1, _menuItemCounter);
+		context
+			.read(ordersProvider.notifier)
+			.add(
+				_tableNumber,
+				_menuItemCounter
+			);
 
 		Navigator.pop(context);
 	}

@@ -1,9 +1,10 @@
 import "package:flutter/material.dart";
+import "package:iroha/models/config.dart";
 import "package:iroha/models/menu-items.dart";
 import "package:iroha/widgets/foods-table.dart";
 
 class IrohaOrderEditor extends StatefulWidget {
-	final void Function(Map<String, int> order) onOrderUpdated;
+	final void Function(int tableNumber, Map<String, int> order) onOrderUpdated;
 
 	IrohaOrderEditor({required this.onOrderUpdated, Key? key}) : super(key: key);
 
@@ -12,6 +13,7 @@ class IrohaOrderEditor extends StatefulWidget {
 }
 
 class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
+	int _tableNumber = 1;
 	final Map<String, int> _menuItemCounter = <String, int>{ };
 
     @override
@@ -20,12 +22,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 			mainAxisAlignment: MainAxisAlignment.start,
 			mainAxisSize: MainAxisSize.min,
 			children: <Widget>[
-				Text(
-					"1番テーブル",
-					style: TextStyle(
-						fontSize: 25
-					)
-				),
+				_buildTableDropDown(context),
 				Container(
 					margin: EdgeInsets.all(10),
 					height: 2,
@@ -41,19 +38,45 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 		);
     }
 
-	Widget _buildFoodsTable(BuildContext context) {
-		final menu = MenuItems.get();
+	@override
+	void initState() {
+		super.initState();
 
-		if (_menuItemCounter.isEmpty) {
-			for (var counter = 0; counter < menu.length; counter++) {
-				_menuItemCounter[menu.elementAt(counter)] = 0;
-			}
+		final menuItems = MenuItems.get();
 
-			widget.onOrderUpdated(_menuItemCounter);
+		for (var counter = 0; counter < menuItems.length; counter++) {
+			_menuItemCounter[menuItems.elementAt(counter)] = 0;
 		}
 
+		widget.onOrderUpdated(_tableNumber, _menuItemCounter);
+	}
+
+	Widget _buildTableDropDown(BuildContext context) {
+		return DropdownButton<int>(
+			value: _tableNumber,
+			items: [
+				for (int i = 1; i <= IrohaConfig.tableCount; i++)
+					DropdownMenuItem(
+						child: Text(
+							"$i番テーブル",
+							style: TextStyle(fontSize: 25)
+						),
+						value: i,
+					)
+			],
+			onChanged: (value) {
+				setState(() {
+					_tableNumber = value ?? 1;
+
+					widget.onOrderUpdated(_tableNumber, _menuItemCounter);
+				});
+			}
+		);
+	}
+
+	Widget _buildFoodsTable(BuildContext context) {
 		return IrohaFoodsTable(
-			data: menu,
+			data: MenuItems.get(),
 			foodNameFromItem: (String item) {
 				return item;
 			},
@@ -74,7 +97,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 						setState(() {
 							_menuItemCounter[item] = value ?? 0;
 
-							widget.onOrderUpdated(_menuItemCounter);
+							widget.onOrderUpdated(_tableNumber, _menuItemCounter);
 						});
 					}
 				);
