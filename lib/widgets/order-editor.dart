@@ -19,10 +19,22 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
     @override
     Widget build(BuildContext context) {
         return Column(
-			mainAxisAlignment: MainAxisAlignment.start,
+			mainAxisAlignment: MainAxisAlignment.center,
 			mainAxisSize: MainAxisSize.min,
 			children: <Widget>[
-				_buildTableDropDown(context),
+				Row(
+					mainAxisAlignment: MainAxisAlignment.center,
+					children: [
+						SizedBox(
+							width: MediaQuery.of(context).size.width * 0.2,
+							child: _buildTableDropDown(context),
+						),
+						Text(
+							"番テーブル",
+							style: TextStyle(fontSize: 25)
+						)
+					]
+				),
 				Container(
 					margin: EdgeInsets.all(10),
 					height: 2,
@@ -54,12 +66,17 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 	Widget _buildTableDropDown(BuildContext context) {
 		return DropdownButton<int>(
 			value: _tableNumber,
+			isExpanded: true,
 			items: [
 				for (int i = 1; i <= IrohaConfig.tableCount; i++)
 					DropdownMenuItem(
-						child: Text(
-							"$i番テーブル",
-							style: TextStyle(fontSize: 25)
+						child: SizedBox(
+							width: MediaQuery.of(context).size.width,
+							child: Text(
+								i.toString(),
+								style: TextStyle(fontSize: 25),
+								textAlign: TextAlign.right,
+							)
 						),
 						value: i,
 					)
