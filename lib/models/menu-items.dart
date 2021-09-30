@@ -1,20 +1,36 @@
 import "package:firebase_database/firebase_database.dart";
 
-class MenuItems {
-	static List<String>? _items;
+class IrohaMenuItem {
+	String name;
+	int price;
 
-	static List<String> get() {
-		if (_items == null) {
-			throw Exception("You cannot use the menu items before initializing them.");
-		}
-		return _items ?? [];
+	IrohaMenuItem({required this.name, required this.price});
+
+	Map<dynamic, dynamic> toJson() {
+		var json = <dynamic, dynamic>{
+			"name": name,
+			"price": price
+		};
+		return json;
 	}
 
-	static Future<List<String>> update() async {
+	static IrohaMenuItem fromJson(Map<dynamic, dynamic> json) {
+		return IrohaMenuItem(
+			name: json["name"],
+			price: json["price"]
+		);
+	}
+}
+
+class MenuItems {
+	static List<IrohaMenuItem> items = [];
+
+	static Future<void> update() async {
 		final ref = FirebaseDatabase.instance.reference();
 		final rawItems = await ref.child("menu-items").get();
-		final items = rawItems.value as Map<dynamic, dynamic>;
-		_items = items.values.map((item) => item.toString()).toList();
-		return _items ?? [];
+		final values = rawItems.value as Map<dynamic, dynamic>;
+		items = values.entries
+			.map((item) => IrohaMenuItem.fromJson(item.value))
+			.toList();
 	}
 }

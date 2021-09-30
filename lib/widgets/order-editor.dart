@@ -54,7 +54,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 	void initState() {
 		super.initState();
 
-		final menuItems = MenuItems.get();
+		final menuItems = MenuItems.items.map((item) => item.name);
 
 		for (var counter = 0; counter < menuItems.length; counter++) {
 			_menuItemCounter[menuItems.elementAt(counter)] = 0;
@@ -93,7 +93,9 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 
 	Widget _buildFoodsTable(BuildContext context) {
 		return IrohaFoodsTable(
-			data: MenuItems.get(),
+			data: MenuItems.items
+				.map((item) => item.name)
+				.toList(),
 			foodNameFromItem: (String item) {
 				return item;
 			},

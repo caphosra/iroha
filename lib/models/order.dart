@@ -55,7 +55,7 @@ class IrohaOrder {
 		order.cooked = DateTime.tryParse(json["cooked"]);
 		order.served = DateTime.tryParse(json["served"]);
 		order.paid = DateTime.tryParse(json["paid"]);
-		for (final item in MenuItems.get()) {
+		for (final item in MenuItems.items.map((item) => item.name)) {
 			order.foods[item] = json[item];
 		}
 		return order;
