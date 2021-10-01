@@ -17,11 +17,15 @@ Future<void> main() async {
 	WidgetsFlutterBinding.ensureInitialized();
 
 	await Firebase.initializeApp();
-	await MenuItems.update();
+	await menuItems.update();
+	await takeOutMenuItems.update();
 	await IrohaConfig.update();
 
     runApp(IrohaApp());
 }
+
+final menuItems = MenuItems(kind: "eat-in");
+final takeOutMenuItems = MenuItems(kind: "take-out");
 
 final ordersProvider = StateNotifierProvider<IrohaOrderList, List<IrohaOrder>>((ref) {
 	ref.onDispose(() { });
@@ -60,12 +64,14 @@ class _IrohaAppViewState extends State<IrohaAppView> {
 		Tuple2("ホーム", Icons.home),
 		Tuple2("注文", Icons.comment),
 		Tuple2("調理", Icons.emoji_food_beverage),
+		Tuple2("持ち帰り", Icons.outbox)
 	];
 
 	static List<Widget> _widgetOptions = [
         IrohaHome(),
         IrohaOrdersBoard(),
         IrohaCookedBoard(),
+		Container()
     ];
 
     int _selectedIndex = 0;

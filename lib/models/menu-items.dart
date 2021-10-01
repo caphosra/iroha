@@ -23,11 +23,14 @@ class IrohaMenuItem {
 }
 
 class MenuItems {
-	static List<IrohaMenuItem> items = [];
+	List<IrohaMenuItem> items = [];
+	final String kind;
 
-	static Future<void> update() async {
+	MenuItems({required this.kind});
+
+	Future<void> update() async {
 		final ref = FirebaseDatabase.instance.reference();
-		final rawItems = await ref.child("menu-items").get();
+		final rawItems = await ref.child("menu-items").child(kind).get();
 		final values = rawItems.value as Map<dynamic, dynamic>;
 		items = values.entries
 			.map((item) => IrohaMenuItem.fromJson(item.value))

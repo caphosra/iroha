@@ -1,6 +1,6 @@
 import "package:firebase_database/firebase_database.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:iroha/models/menu-items.dart";
+import "package:iroha/main.dart";
 import "package:uuid/uuid.dart";
 
 typedef IrohaMenuID = String;
@@ -55,7 +55,7 @@ class IrohaOrder {
 		order.cooked = DateTime.tryParse(json["cooked"]);
 		order.served = DateTime.tryParse(json["served"]);
 		order.paid = DateTime.tryParse(json["paid"]);
-		for (final item in MenuItems.items.map((item) => item.name)) {
+		for (final item in menuItems.items.map((item) => item.name)) {
 			order.foods[item] = json[item];
 		}
 		return order;
