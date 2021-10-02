@@ -129,10 +129,15 @@ class IrohaOrderView extends StatelessWidget {
 						return food.item1;
 					},
 					counterFromItem: (Tuple2<String, int> food) {
-						return Text(
-							food.item2.toString(),
-							style: TextStyle(fontSize: 25)
-						);
+						if (food.item2 == 0) {
+							return null;
+						}
+						else {
+							return Text(
+								food.item2.toString(),
+								style: TextStyle(fontSize: 20)
+							);
+						}
 					}
 				),
 				Container(

@@ -107,7 +107,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 							DropdownMenuItem(
 								child: Text(
 									i.toString(),
-									style: TextStyle(fontSize: 25)
+									style: TextStyle(fontSize: 20)
 								),
 								value: i,
 							)
