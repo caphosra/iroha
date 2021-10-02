@@ -109,7 +109,7 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 		final ref = FirebaseDatabase.instance.reference();
 		final stream = ref.child("orders").onValue;
 		await for (final event in stream) {
-			final items = event.snapshot.value as Map<dynamic, dynamic>;
+			final items = (event.snapshot.value ?? { }) as Map<dynamic, dynamic>;
 			state = _toList(items);
 		}
 	}
