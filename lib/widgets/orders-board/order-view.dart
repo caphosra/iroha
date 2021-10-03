@@ -122,19 +122,14 @@ class IrohaOrderView extends StatelessWidget {
 					color: Colors.blue
 				),
 				IrohaFoodsTable(
-					data: data.foods.entries
-						.map((item) => Tuple2(item.key, item.value))
-						.toList(),
-					foodNameFromItem: (Tuple2<String, int> food) {
-						return food.item1;
-					},
-					counterFromItem: (Tuple2<String, int> food) {
-						if (food.item2 == 0) {
+					data: data.getCounts(),
+					builder: (context, IrohaFoodCount food) {
+						if (food.count == 0) {
 							return null;
 						}
 						else {
 							return Text(
-								food.item2.toString(),
+								food.count.toString(),
 								style: TextStyle(fontSize: 20)
 							);
 						}

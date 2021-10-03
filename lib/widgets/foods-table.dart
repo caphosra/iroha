@@ -2,13 +2,11 @@ import "package:flutter/material.dart";
 
 class IrohaFoodsTable<T> extends StatelessWidget {
 	final List<T> data;
-	final String Function(T) foodNameFromItem;
-	final Widget? Function(T) counterFromItem;
+	final Widget? Function(BuildContext context, T item) builder;
 
 	IrohaFoodsTable({
 		required this.data,
-		required this.foodNameFromItem,
-		required this.counterFromItem,
+		required this.builder,
 		Key? key
 	}) : super(key: key);
 
@@ -39,7 +37,7 @@ class IrohaFoodsTable<T> extends StatelessWidget {
 						],
 						rows: data
 							.map((item) {
-								final widget = counterFromItem(item);
+								final widget = builder(context, item);
 								if (widget == null) {
 									return null;
 								}
@@ -48,7 +46,7 @@ class IrohaFoodsTable<T> extends StatelessWidget {
 										cells: [
 											DataCell(
 												Text(
-													foodNameFromItem(item),
+													item.toString(),
 													style: TextStyle(fontSize: 20)
 												)
 											),

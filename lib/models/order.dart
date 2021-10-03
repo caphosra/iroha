@@ -33,6 +33,11 @@ class IrohaOrder {
 		}
 	}
 
+	List<IrohaFoodCount> getCounts() =>
+		foods.entries
+			.map((item) => IrohaFoodCount(id: item.key, count: item.value))
+			.toList();
+
 	Map<dynamic, dynamic> toJson() {
 		var json = <dynamic, dynamic>{
 			"tableNumber": tableNumber,
@@ -67,6 +72,18 @@ enum IrohaOrderStatus {
 	COOKED,
 	SERVED,
 	PAID
+}
+
+class IrohaFoodCount {
+	IrohaMenuID id;
+	int count;
+
+	IrohaFoodCount({required this.id, required this.count});
+
+	@override
+	String toString() {
+		return id;
+	}
 }
 
 class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {

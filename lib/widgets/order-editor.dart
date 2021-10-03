@@ -96,10 +96,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 			data: menuItems.items
 				.map((item) => item.name)
 				.toList(),
-			foodNameFromItem: (String item) {
-				return item;
-			},
-			counterFromItem: (String item) {
+			builder: (context, String item) {
 				return DropdownButton<int>(
 					value: _menuItemCounter[item],
 					items: [
