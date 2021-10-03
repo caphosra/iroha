@@ -39,7 +39,7 @@ class IrohaOrder {
 			"posted": posted.toString(),
 			"cooked": cooked.toString(),
 			"served": served.toString(),
-			"paid": served.toString()
+			"paid": paid.toString()
 		};
 		json.addAll(foods);
 		return json;
