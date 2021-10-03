@@ -34,7 +34,7 @@ class _IrohaCookedBoardState extends State<IrohaCookedBoard> {
 							children: <Widget>[
 								Center(
 									child: Text(
-										"調理",
+										"提供",
 										style: TextStyle(
 											fontSize: 30
 										)

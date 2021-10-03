@@ -36,7 +36,7 @@ class _IrohaOrdersListViewState extends State<IrohaOrdersListView> {
 							children: <Widget>[
 								Center(
 									child: Text(
-										"注文",
+										"調理",
 										style: TextStyle(
 											fontSize: 30
 										)

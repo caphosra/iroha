@@ -62,8 +62,8 @@ class IrohaAppView extends StatefulWidget {
 class _IrohaAppViewState extends State<IrohaAppView> {
     static List<Tuple2<String, IconData>> items = const [
 		Tuple2("ホーム", Icons.home),
-		Tuple2("注文", Icons.comment),
 		Tuple2("調理", Icons.emoji_food_beverage),
+		Tuple2("提供", Icons.comment),
 		Tuple2("持ち帰り", Icons.outbox)
 	];
 
