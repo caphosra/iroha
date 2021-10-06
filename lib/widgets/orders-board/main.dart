@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
-import "package:iroha/main.dart";
+import "package:iroha/models/order.dart";
 import "package:iroha/widgets/order-editor.dart";
 import "package:iroha/widgets/orders-board/orders-list.dart";
 
@@ -59,7 +59,7 @@ class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
 
 	void _onAddButtonClicked(BuildContext context, ScopedReader watch) {
 		context
-			.read(ordersProvider.notifier)
+			.read(eatInOrdersProvider.notifier)
 			.add(
 				_tableNumber,
 				_menuItemCounter

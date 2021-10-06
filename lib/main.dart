@@ -6,7 +6,6 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 import "package:iroha/models/config.dart";
 import "package:iroha/models/menu-items.dart";
-import "package:iroha/models/order.dart";
 import "package:iroha/widgets/bottom-bar.dart";
 import "package:iroha/widgets/cooked-board/main.dart";
 import "package:iroha/widgets/home/main.dart";
@@ -17,24 +16,12 @@ Future<void> main() async {
 	WidgetsFlutterBinding.ensureInitialized();
 
 	await Firebase.initializeApp();
-	await menuItems.update();
+	await eatInMenuItems.update();
 	await takeOutMenuItems.update();
 	await IrohaConfig.update();
 
     runApp(IrohaApp());
 }
-
-final menuItems = MenuItems(kind: "eat-in");
-final takeOutMenuItems = MenuItems(kind: "take-out");
-
-final ordersProvider = StateNotifierProvider<IrohaOrderList, List<IrohaOrder>>((ref) {
-	ref.onDispose(() { });
-
-	var dataList = IrohaOrderList([]);
-	dataList.keepWatching();
-
-	return dataList;
-});
 
 class IrohaApp extends StatelessWidget {
     @override

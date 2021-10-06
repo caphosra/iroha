@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
-import "package:iroha/main.dart";
+import "package:iroha/models/order.dart";
 import "package:iroha/widgets/cooked-board/order-view.dart";
 
 class IrohaCookedBoard extends StatefulWidget {
@@ -15,7 +15,7 @@ class _IrohaCookedBoardState extends State<IrohaCookedBoard> {
     Widget build(BuildContext context) {
 		return Consumer(
 			builder: (context, watch, child) {
-				var orders = watch(ordersProvider);
+				var orders = watch(eatInOrdersProvider);
 
 				var ordersWidgets = orders
 					.where((data) =>

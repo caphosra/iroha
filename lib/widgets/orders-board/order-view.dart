@@ -1,10 +1,8 @@
 import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
-import "package:iroha/main.dart";
 import "package:iroha/widgets/foods-table.dart";
 import "package:iroha/widgets/orders-board/order-button.dart";
 import "package:iroha/models/order.dart";
-import "package:tuple/tuple.dart";
 
 class IrohaOrderView extends StatelessWidget {
 	final IrohaOrder data;
@@ -43,7 +41,7 @@ class IrohaOrderView extends StatelessWidget {
 					child: Text("もちろん"),
 					onPressed:  () {
 						context
-							.read(ordersProvider.notifier)
+							.read(eatInOrdersProvider.notifier)
 							.delete(data.id);
 						Navigator.of(context).pop();
 
@@ -81,7 +79,7 @@ class IrohaOrderView extends StatelessWidget {
 					child: Text("もちろん"),
 					onPressed:  () {
 						context
-							.read(ordersProvider.notifier)
+							.read(eatInOrdersProvider.notifier)
 							.markAs(data.id, IrohaOrderStatus.COOKED, DateTime.now());
 						Navigator.of(context).pop();
 

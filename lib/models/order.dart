@@ -1,6 +1,7 @@
 import "package:firebase_database/firebase_database.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:iroha/main.dart";
+import "package:iroha/models/menu-items.dart";
+import "package:iroha/models/order-kind.dart";
 import "package:uuid/uuid.dart";
 
 typedef IrohaMenuID = String;
@@ -50,7 +51,7 @@ class IrohaOrder {
 		return json;
 	}
 
-	static IrohaOrder fromJson(String id, Map<dynamic, dynamic> json) {
+	static IrohaOrder fromJson(String id, Map<dynamic, dynamic> json, MenuItems menu) {
 		var order = IrohaOrder(
 			id: id,
 			tableNumber: json["tableNumber"],
@@ -60,7 +61,7 @@ class IrohaOrder {
 		order.cooked = DateTime.tryParse(json["cooked"]);
 		order.served = DateTime.tryParse(json["served"]);
 		order.paid = DateTime.tryParse(json["paid"]);
-		for (final item in menuItems.items.map((item) => item.name)) {
+		for (final item in menu.items.map((item) => item.name)) {
 			order.foods[item] = json[item];
 		}
 		return order;
@@ -87,7 +88,9 @@ class IrohaFoodCount {
 }
 
 class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
-	IrohaOrderList([List<IrohaOrder>? initial]) : super(initial ?? []);
+	final IrohaOrderKind kind;
+
+	IrohaOrderList({required this.kind, List<IrohaOrder>? initial}) : super(initial ?? []);
 
 	Future<void> add(int tableNumber, Map<IrohaMenuID, int> foods) async {
 		final uuid = Uuid().v4();
@@ -98,12 +101,12 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 			foods: foods
 		);
 		final ref = FirebaseDatabase.instance.reference();
-		ref.child("orders").child(uuid).set(order.toJson());
+		ref.child("orders").child(kind.get()).child(uuid).set(order.toJson());
 	}
 
 	Future<void> delete(String id) async {
 		final ref = FirebaseDatabase.instance.reference();
-		ref.child("orders").child(id).remove();
+		ref.child("orders").child(kind.get()).child(id).remove();
 	}
 
 	Future<void> update() async {
@@ -112,19 +115,20 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 
 	Future<void> markAs(String id, IrohaOrderStatus status, DateTime time) async {
 		final ref = FirebaseDatabase.instance.reference();
-		final rawItems = await ref.child("orders").child(id).get();
+		final rawItems = await ref.child("orders").child(kind.get()).child(id).get();
 		final items = IrohaOrder.fromJson(
 			id,
-			rawItems.value as Map<dynamic, dynamic>
+			rawItems.value as Map<dynamic, dynamic>,
+			MenuItems.getMenu(kind)
 		);
 
 		items.markAs(status, time);
-		await ref.child("orders").child(id).set(items.toJson());
+		await ref.child("orders").child(kind.get()).child(id).set(items.toJson());
 	}
 
 	Future<void> keepWatching() async {
 		final ref = FirebaseDatabase.instance.reference();
-		final stream = ref.child("orders").onValue;
+		final stream = ref.child("orders").child(kind.get()).onValue;
 		await for (final event in stream) {
 			final items = (event.snapshot.value ?? { }) as Map<dynamic, dynamic>;
 			state = _toList(items);
@@ -133,7 +137,7 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 
 	Future<List<IrohaOrder>> _downloadData() async {
 		final ref = FirebaseDatabase.instance.reference();
-		final rawItems = await ref.child("orders").get();
+		final rawItems = await ref.child("orders").child(kind.get()).get();
 		final items = rawItems.value as Map<dynamic, dynamic>;
 
 		return _toList(items);
@@ -144,9 +148,28 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 			.map((order) {
 				return IrohaOrder.fromJson(
 					order.key,
-					order.value
+					order.value,
+					MenuItems.getMenu(kind)
 				);
 			})
 			.toList();
 	}
 }
+
+final eatInOrdersProvider = StateNotifierProvider<IrohaOrderList, List<IrohaOrder>>((ref) {
+	ref.onDispose(() { });
+
+	var dataList = IrohaOrderList(kind: IrohaOrderKind.EAT_IN);
+	dataList.keepWatching();
+
+	return dataList;
+});
+
+final takeOutOrdersProvider = StateNotifierProvider<IrohaOrderList, List<IrohaOrder>>((ref) {
+	ref.onDispose(() { });
+
+	var dataList = IrohaOrderList(kind: IrohaOrderKind.TAKE_OUT);
+	dataList.keepWatching();
+
+	return dataList;
+});

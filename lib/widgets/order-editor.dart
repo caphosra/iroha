@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
-import "package:iroha/main.dart";
 import "package:iroha/models/config.dart";
+import "package:iroha/models/menu-items.dart";
 import "package:iroha/widgets/foods-table.dart";
 
 class IrohaOrderEditor extends StatefulWidget {
@@ -54,7 +54,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 	void initState() {
 		super.initState();
 
-		final menuNames = menuItems.items.map((item) => item.name);
+		final menuNames = eatInMenuItems.items.map((item) => item.name);
 
 		for (var counter = 0; counter < menuNames.length; counter++) {
 			_menuItemCounter[menuNames.elementAt(counter)] = 0;
@@ -93,7 +93,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 
 	Widget _buildFoodsTable(BuildContext context) {
 		return IrohaFoodsTable(
-			data: menuItems.items
+			data: eatInMenuItems.items
 				.map((item) => item.name)
 				.toList(),
 			builder: (context, String item) {
