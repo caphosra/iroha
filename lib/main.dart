@@ -10,6 +10,7 @@ import "package:iroha/widgets/bottom-bar.dart";
 import "package:iroha/widgets/cooked-board/main.dart";
 import "package:iroha/widgets/home/main.dart";
 import "package:iroha/widgets/orders-board/main.dart";
+import "package:iroha/widgets/take-out/main.dart";
 import "package:tuple/tuple.dart";
 
 Future<void> main() async {
@@ -58,7 +59,7 @@ class _IrohaAppViewState extends State<IrohaAppView> {
         IrohaHome(),
         IrohaOrdersBoard(),
         IrohaCookedBoard(),
-		Container()
+		IrohaTakeOut()
     ];
 
     int _selectedIndex = 0;

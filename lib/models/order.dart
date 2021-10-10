@@ -169,7 +169,6 @@ final takeOutOrdersProvider = StateNotifierProvider<IrohaOrderList, List<IrohaOr
 	ref.onDispose(() { });
 
 	var dataList = IrohaOrderList(kind: IrohaOrderKind.TAKE_OUT);
-	dataList.keepWatching();
 
 	return dataList;
 });
