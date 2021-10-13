@@ -31,18 +31,8 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
 						Column(
 							mainAxisAlignment: MainAxisAlignment.center,
 							mainAxisSize: MainAxisSize.min,
-							children: <Widget>[
-								Container(
-									margin: EdgeInsets.all(10),
-									height: 2,
-									color: Colors.blue
-								),
+							children: [
 								_buildFoodsTable(context),
-								Container(
-									margin: EdgeInsets.all(10),
-									height: 2,
-									color: Colors.blue
-								),
 								TextButton(
 									onPressed: _onPaymentButtonClicked,
 									child: Text(

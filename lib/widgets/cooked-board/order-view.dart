@@ -114,11 +114,6 @@ class IrohaOrderView extends StatelessWidget {
 						fontSize: 25
 					)
 				),
-				Container(
-					margin: EdgeInsets.all(10),
-					height: 2,
-					color: Colors.blue
-				),
 				IrohaFoodsTable(
 					data: data.getCounts(),
 					builder: (context, IrohaFoodCount food) {
@@ -132,11 +127,6 @@ class IrohaOrderView extends StatelessWidget {
 							);
 						}
 					}
-				),
-				Container(
-					margin: EdgeInsets.all(10),
-					height: 2,
-					color: Colors.blue
 				),
 				Row(
 					children: [
