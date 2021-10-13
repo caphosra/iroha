@@ -35,17 +35,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
 						)
 					]
 				),
-				Container(
-					margin: EdgeInsets.all(10),
-					height: 2,
-					color: Colors.blue
-				),
-				_buildFoodsTable(context),
-				Container(
-					margin: EdgeInsets.all(10),
-					height: 2,
-					color: Colors.blue
-				)
+				_buildFoodsTable(context)
 			]
 		);
     }
