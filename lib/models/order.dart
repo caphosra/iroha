@@ -81,6 +81,20 @@ class IrohaFoodCount {
 
 	IrohaFoodCount({required this.id, required this.count});
 
+	static List<IrohaFoodCount> toList(Map<String, int> counts) {
+		return counts.entries
+			.map((item) => IrohaFoodCount(id: item.key, count: item.value))
+			.toList();
+	}
+
+	static int getPrice(Map<String, int> counts, IrohaOrderKind kind) {
+		int price = 0;
+		for (final item in MenuItems.getMenu(kind).items) {
+			price += (counts[item.name] ?? 0) * item.price;
+		}
+		return price;
+	}
+
 	@override
 	String toString() {
 		return id;
