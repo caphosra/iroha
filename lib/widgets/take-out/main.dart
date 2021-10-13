@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
-import "package:hooks_riverpod/hooks_riverpod.dart";
 import "package:iroha/models/menu-items.dart";
+import "package:iroha/models/order-kind.dart";
 import "package:iroha/models/order.dart";
+import "package:iroha/widgets/cashier-dialog.dart";
 import "package:iroha/widgets/foods-table.dart";
 
 class IrohaTakeOut extends StatefulWidget {
@@ -92,39 +93,10 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
 	}
 
 	Future<void> _onPaymentButtonClicked() async {
-		Widget cancelButton = TextButton(
-			child: Text("やっぱりやめる"),
-			onPressed:  () {
-				Navigator.of(context).pop(false);
-			},
-		);
-		Widget continueButton = Consumer(
-			builder: (context, watch, child) {
-				return TextButton(
-					child: Text("もちろん"),
-					onPressed:  () {
-						context
-							.read(takeOutOrdersProvider.notifier)
-							.add(-1, _menuItemCounter);
-
-						Navigator.of(context).pop(true);
-					}
-				);
-			}
-		);
-
-		bool isPaid = await showDialog(
-			context: context,
-			builder: (BuildContext ctx) {
-				return AlertDialog(
-					title: Text("確認"),
-					content: Text("本当にこの注文でいいですか?"),
-					actions: [
-						cancelButton,
-						continueButton,
-					]
-				);
-			}
+		bool isPaid = await IrohaCashierDialog.show(
+			context,
+			IrohaFoodCount.toList(_menuItemCounter),
+			IrohaFoodCount.getPrice(_menuItemCounter, IrohaOrderKind.TAKE_OUT)
 		);
 
 		if (isPaid) {
