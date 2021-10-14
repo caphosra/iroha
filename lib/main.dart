@@ -2,11 +2,13 @@ import "dart:async";
 import "dart:math";
 
 import "package:firebase_core/firebase_core.dart";
+import 'package:flutter/foundation.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 import "package:iroha/models/config.dart";
 import "package:iroha/models/menu-items.dart";
 import "package:iroha/widgets/bottom-bar.dart";
+import 'package:iroha/widgets/cashier/main.dart';
 import "package:iroha/widgets/cooked-board/main.dart";
 import "package:iroha/widgets/home/main.dart";
 import "package:iroha/widgets/orders-board/main.dart";
@@ -48,11 +50,19 @@ class IrohaAppView extends StatefulWidget {
 }
 
 class _IrohaAppViewState extends State<IrohaAppView> {
-    static List<Tuple2<String, IconData>> items = const [
+    static List<Tuple2<String, IconData>> _items = const [
 		Tuple2("ホーム", Icons.home),
 		Tuple2("調理", Icons.emoji_food_beverage),
 		Tuple2("提供", Icons.comment),
 		Tuple2("持ち帰り", Icons.outbox)
+	];
+
+	static List<Tuple2<String, IconData>> _webItems = const [
+		Tuple2("ホーム", Icons.home),
+		Tuple2("調理", Icons.emoji_food_beverage),
+		Tuple2("提供", Icons.comment),
+		Tuple2("持ち帰り", Icons.outbox),
+		Tuple2("会計", Icons.calculate)
 	];
 
 	static List<Widget> _widgetOptions = [
@@ -62,13 +72,21 @@ class _IrohaAppViewState extends State<IrohaAppView> {
 		IrohaTakeOut()
     ];
 
+	static List<Widget> _webWidgetOptions = [
+        IrohaHome(),
+        IrohaOrdersBoard(),
+        IrohaCookedBoard(),
+		IrohaTakeOut(),
+		IrohaCashier()
+    ];
+
     int _selectedIndex = 0;
 
     @override
     Widget build(BuildContext context) {
         return Scaffold(
             body: Center(
-                child: _widgetOptions
+                child: (kIsWeb ? _webWidgetOptions : _widgetOptions)
 					.map((widget) {
 						return Container(
 							width: min(MediaQuery.of(context).size.width, 500),
@@ -79,7 +97,7 @@ class _IrohaAppViewState extends State<IrohaAppView> {
             ),
 			extendBody: true,
             bottomNavigationBar: IrohaBottomBar(
-				items: items,
+				items: (kIsWeb ? _webItems : _items),
 				onSelected: _onSelected
 			),
 			backgroundColor: Colors.white
