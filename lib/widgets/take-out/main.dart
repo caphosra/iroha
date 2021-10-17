@@ -4,6 +4,7 @@ import "package:iroha/models/order-kind.dart";
 import "package:iroha/models/order.dart";
 import "package:iroha/widgets/cashier-dialog.dart";
 import "package:iroha/widgets/foods-table.dart";
+import "package:iroha/widgets/header.dart";
 
 class IrohaTakeOut extends StatefulWidget {
 	IrohaTakeOut({Key? key}) : super(key: key);
@@ -17,33 +18,22 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
 
 	@override
     Widget build(BuildContext context) {
-        return Stack(
+        return IrohaWithHeader(
+			text: "持ち帰り",
 			children: [
-				ListView(
-					children: <Widget>[
-						Center(
+				Column(
+					mainAxisAlignment: MainAxisAlignment.center,
+					mainAxisSize: MainAxisSize.min,
+					children: [
+						_buildFoodsTable(context),
+						TextButton(
+							onPressed: _onPaymentButtonClicked,
 							child: Text(
-								"持ち帰り",
+								"支払いへ進む",
 								style: TextStyle(
-									fontSize: 30
+									fontSize: 20
 								)
 							)
-						),
-						Column(
-							mainAxisAlignment: MainAxisAlignment.center,
-							mainAxisSize: MainAxisSize.min,
-							children: [
-								_buildFoodsTable(context),
-								TextButton(
-									onPressed: _onPaymentButtonClicked,
-									child: Text(
-										"支払いへ進む",
-										style: TextStyle(
-											fontSize: 20
-										)
-									)
-								)
-							]
 						)
 					]
 				)

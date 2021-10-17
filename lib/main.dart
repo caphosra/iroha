@@ -2,18 +2,17 @@ import "dart:async";
 import "dart:math";
 
 import "package:firebase_core/firebase_core.dart";
-import 'package:flutter/foundation.dart';
+import "package:flutter/foundation.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 import "package:iroha/models/config.dart";
 import "package:iroha/models/menu-items.dart";
 import "package:iroha/widgets/bottom-bar.dart";
-import 'package:iroha/widgets/cashier/main.dart';
+import "package:iroha/widgets/cashier/main.dart";
 import "package:iroha/widgets/cooked-board/main.dart";
 import "package:iroha/widgets/home/main.dart";
 import "package:iroha/widgets/orders-board/main.dart";
 import "package:iroha/widgets/take-out/main.dart";
-import "package:tuple/tuple.dart";
 
 Future<void> main() async {
 	WidgetsFlutterBinding.ensureInitialized();
@@ -49,36 +48,50 @@ class IrohaAppView extends StatefulWidget {
     _IrohaAppViewState createState() => _IrohaAppViewState();
 }
 
+class IrohaPage {
+	final String title;
+	final IconData icon;
+	final Widget widget;
+	final bool isWebOnly;
+
+	IrohaPage({required this.title, required this.icon, required this.widget, this.isWebOnly = false});
+}
+
 class _IrohaAppViewState extends State<IrohaAppView> {
-    static List<Tuple2<String, IconData>> _items = const [
-		Tuple2("ホーム", Icons.home),
-		Tuple2("調理", Icons.emoji_food_beverage),
-		Tuple2("提供", Icons.comment),
-		Tuple2("持ち帰り", Icons.outbox)
+    static List<IrohaPage> _items = [
+		IrohaPage(
+			title: "ホーム",
+			icon: Icons.home,
+			widget: IrohaHome()
+		),
+		IrohaPage(
+			title: "調理",
+			icon: Icons.emoji_food_beverage,
+			widget: IrohaOrdersBoard()
+		),
+		IrohaPage(
+			title: "提供",
+			icon: Icons.comment,
+			widget: IrohaCookedBoard()
+		),
+		IrohaPage(
+			title: "持ち帰り",
+			icon: Icons.outbox,
+			widget: IrohaTakeOut()
+		),
+		IrohaPage(
+			title: "会計",
+			icon: Icons.calculate,
+			widget: IrohaCashier(),
+			isWebOnly: true
+		),
+		IrohaPage(
+			title: "設定",
+			icon: Icons.settings,
+			widget: Container(),
+			isWebOnly: true
+		)
 	];
-
-	static List<Tuple2<String, IconData>> _webItems = const [
-		Tuple2("ホーム", Icons.home),
-		Tuple2("調理", Icons.emoji_food_beverage),
-		Tuple2("提供", Icons.comment),
-		Tuple2("持ち帰り", Icons.outbox),
-		Tuple2("会計", Icons.calculate)
-	];
-
-	static List<Widget> _widgetOptions = [
-        IrohaHome(),
-        IrohaOrdersBoard(),
-        IrohaCookedBoard(),
-		IrohaTakeOut()
-    ];
-
-	static List<Widget> _webWidgetOptions = [
-        IrohaHome(),
-        IrohaOrdersBoard(),
-        IrohaCookedBoard(),
-		IrohaTakeOut(),
-		IrohaCashier()
-    ];
 
     int _selectedIndex = 0;
 
@@ -86,18 +99,21 @@ class _IrohaAppViewState extends State<IrohaAppView> {
     Widget build(BuildContext context) {
         return Scaffold(
             body: Center(
-                child: (kIsWeb ? _webWidgetOptions : _widgetOptions)
-					.map((widget) {
+                child: _items
+					.where((page) => (!page.isWebOnly) || kIsWeb)
+					.map((page) {
 						return Container(
 							width: min(MediaQuery.of(context).size.width, 500),
-							child: widget
+							child: page.widget
 						);
 					})
 					.elementAt(_selectedIndex),
             ),
 			extendBody: true,
             bottomNavigationBar: IrohaBottomBar(
-				items: (kIsWeb ? _webItems : _items),
+				items: _items
+					.where((page) => (!page.isWebOnly) || kIsWeb)
+					.toList(),
 				onSelected: _onSelected
 			),
 			backgroundColor: Colors.white

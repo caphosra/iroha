@@ -1,10 +1,10 @@
 import "package:flutter/material.dart";
-import "package:tuple/tuple.dart";
+import "package:iroha/main.dart";
 
 class IrohaBottomBar extends StatefulWidget {
 	IrohaBottomBar({required this.items, required this.onSelected, Key? key}) : super(key: key);
 
-	final List<Tuple2<String, IconData>> items;
+	final List<IrohaPage> items;
 	final void Function(int) onSelected;
 
     @override
@@ -31,8 +31,8 @@ class _IrohaBottomBarState extends State<IrohaBottomBar> {
 					items: this.widget.items
 						.map((item) {
 							return BottomNavigationBarItem(
-								icon: Icon(item.item2),
-								label: item.item1
+								icon: Icon(item.icon),
+								label: item.title
 							);
 						})
 						.toList(),

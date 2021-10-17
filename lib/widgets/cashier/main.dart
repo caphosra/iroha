@@ -1,9 +1,10 @@
 import "package:flutter/material.dart";
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:iroha/models/config.dart';
-import 'package:iroha/models/order-kind.dart';
-import 'package:iroha/models/order.dart';
-import 'package:iroha/widgets/cashier-dialog.dart';
+import "package:hooks_riverpod/hooks_riverpod.dart";
+import "package:iroha/models/config.dart";
+import "package:iroha/models/order-kind.dart";
+import "package:iroha/models/order.dart";
+import "package:iroha/widgets/cashier-dialog.dart";
+import "package:iroha/widgets/header.dart";
 
 class IrohaCashier extends StatefulWidget {
 	IrohaCashier({Key? key}) : super(key: key);
@@ -17,62 +18,49 @@ class _IrohaCashierState extends State<IrohaCashier> {
 
 	@override
 	Widget build(BuildContext context) {
-		return Center(
-			child: Stack(
-				children: [
-					ListView(
-						children: <Widget>[
-							Center(
-								child: Text(
-									"会計",
-									style: TextStyle(
-										fontSize: 30
+		return IrohaWithHeader(
+			text: "会計",
+			children: [
+				Column(
+					mainAxisAlignment: MainAxisAlignment.center,
+					mainAxisSize: MainAxisSize.min,
+					children: [
+						DropdownButton<int>(
+							value: _tableNumber,
+							items: [
+								for (int i = 1; i <= IrohaConfig.tableCount; i++)
+									DropdownMenuItem(
+										child: Text(
+											"$i番テーブル",
+											style: TextStyle(fontSize: 20)
+										),
+										value: i,
 									)
-								)
-							),
-							Column(
-								mainAxisAlignment: MainAxisAlignment.center,
-								mainAxisSize: MainAxisSize.min,
-								children: [
-									DropdownButton<int>(
-										value: _tableNumber,
-										items: [
-											for (int i = 1; i <= IrohaConfig.tableCount; i++)
-												DropdownMenuItem(
-													child: Text(
-														"$i番テーブル",
-														style: TextStyle(fontSize: 20)
-													),
-													value: i,
-												)
-										],
-										onChanged: (value) {
-											setState(() {
-												_tableNumber = value ?? 0;
-											});
-										}
-									),
-									Consumer(
-										builder: (context, watch, child) {
-											final orders = watch(eatInOrdersProvider);
+							],
+							onChanged: (value) {
+								setState(() {
+									_tableNumber = value ?? 0;
+								});
+							}
+						),
+						Consumer(
+							builder: (context, watch, child) {
+								final orders = watch(eatInOrdersProvider);
 
-											return TextButton(
-												onPressed: () => onPaymentButtonPressed(context, orders),
-												child: Text(
-													"支払いへ進む",
-													style: TextStyle(
-														fontSize: 20
-													)
-												)
-											);
-										}
+								return TextButton(
+									onPressed: () => onPaymentButtonPressed(context, orders),
+									child: Text(
+										"支払いへ進む",
+										style: TextStyle(
+											fontSize: 20
+										)
 									)
-								]
-							)
-						]
-					)
-				]
-			)
+								);
+							}
+						)
+					]
+				)
+			]
 		);
 	}
 
