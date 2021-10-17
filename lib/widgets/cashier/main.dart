@@ -25,23 +25,26 @@ class _IrohaCashierState extends State<IrohaCashier> {
 					mainAxisAlignment: MainAxisAlignment.center,
 					mainAxisSize: MainAxisSize.min,
 					children: [
-						DropdownButton<int>(
-							value: _tableNumber,
-							items: [
-								for (int i = 1; i <= IrohaConfig.tableCount; i++)
-									DropdownMenuItem(
-										child: Text(
-											"$i番テーブル",
-											style: TextStyle(fontSize: 20)
-										),
-										value: i,
-									)
-							],
-							onChanged: (value) {
-								setState(() {
-									_tableNumber = value ?? 0;
-								});
-							}
+						Container(
+							padding: EdgeInsets.all(20),
+							child: DropdownButton<int>(
+								value: _tableNumber,
+								items: [
+									for (int i = 1; i <= IrohaConfig.tableCount; i++)
+										DropdownMenuItem(
+											child: Text(
+												"$i番テーブル",
+												style: TextStyle(fontSize: 25)
+											),
+											value: i,
+										)
+								],
+								onChanged: (value) {
+									setState(() {
+										_tableNumber = value ?? 0;
+									});
+								}
+							)
 						),
 						Consumer(
 							builder: (context, watch, child) {
