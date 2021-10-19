@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
 import "package:iroha/models/order.dart";
 import "package:iroha/widgets/cooked-board/order-view.dart";
+import "package:iroha/widgets/header.dart";
 
 class IrohaCookedBoard extends StatefulWidget {
 	IrohaCookedBoard({Key? key}) : super(key: key);
@@ -28,22 +29,9 @@ class _IrohaCookedBoardState extends State<IrohaCookedBoard> {
 						)
 					).toList();
 
-				return Stack(
-					children: [
-						ListView(
-							children: <Widget>[
-								Center(
-									child: Text(
-										"提供",
-										style: TextStyle(
-											fontSize: 30
-										)
-									)
-								),
-								...ordersWidgets
-							]
-						)
-					]
+				return IrohaWithHeader(
+					text: "提供",
+					children: ordersWidgets
 				);
 			}
 		);
