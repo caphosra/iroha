@@ -6,12 +6,14 @@ import "package:flutter/foundation.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 import "package:iroha/models/config.dart";
+import "package:iroha/models/device-manager.dart";
 import "package:iroha/models/menu-items.dart";
 import "package:iroha/widgets/bottom-bar.dart";
 import "package:iroha/widgets/cashier/main.dart";
 import "package:iroha/widgets/cooked-board/main.dart";
 import "package:iroha/widgets/home/main.dart";
 import "package:iroha/widgets/orders-board/main.dart";
+import "package:iroha/widgets/settings/main.dart";
 import "package:iroha/widgets/take-out/main.dart";
 
 Future<void> main() async {
@@ -52,9 +54,9 @@ class IrohaPage {
 	final String title;
 	final IconData icon;
 	final Widget widget;
-	final bool isWebOnly;
+	final bool isAdminOnly;
 
-	IrohaPage({required this.title, required this.icon, required this.widget, this.isWebOnly = false});
+	IrohaPage({required this.title, required this.icon, required this.widget, this.isAdminOnly = false});
 }
 
 class _IrohaAppViewState extends State<IrohaAppView> {
@@ -83,13 +85,13 @@ class _IrohaAppViewState extends State<IrohaAppView> {
 			title: "会計",
 			icon: Icons.calculate,
 			widget: IrohaCashier(),
-			isWebOnly: true
+			isAdminOnly: true
 		),
 		IrohaPage(
 			title: "設定",
 			icon: Icons.settings,
-			widget: Container(),
-			isWebOnly: true
+			widget: IrohaSettings(),
+			isAdminOnly: true
 		)
 	];
 
@@ -100,7 +102,7 @@ class _IrohaAppViewState extends State<IrohaAppView> {
         return Scaffold(
             body: Center(
                 child: _items
-					.where((page) => (!page.isWebOnly) || kIsWeb)
+					.where((page) => (!page.isAdminOnly) || DeviceManager.isAdmin())
 					.map((page) {
 						return Container(
 							width: min(MediaQuery.of(context).size.width, 500),
@@ -112,7 +114,7 @@ class _IrohaAppViewState extends State<IrohaAppView> {
 			extendBody: true,
             bottomNavigationBar: IrohaBottomBar(
 				items: _items
-					.where((page) => (!page.isWebOnly) || kIsWeb)
+					.where((page) => (!page.isAdminOnly) || DeviceManager.isAdmin())
 					.toList(),
 				onSelected: _onSelected
 			),

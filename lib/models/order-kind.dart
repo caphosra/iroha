@@ -12,4 +12,13 @@ extension IrohaOrderKindEx on IrohaOrderKind {
 				return "take-out";
 		}
 	}
+
+	String getJapaneseName() {
+		switch (this) {
+			case IrohaOrderKind.EAT_IN:
+				return "イートイン";
+			case IrohaOrderKind.TAKE_OUT:
+				return "テイクアウト";
+		}
+	}
 }
