@@ -1,3 +1,5 @@
+import "dart:io";
+
 import "package:firebase_database/firebase_database.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:iroha/models/menu-items.dart";
@@ -130,9 +132,16 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 	Future<void> markAs(String id, IrohaOrderStatus status, DateTime time) async {
 		final ref = FirebaseDatabase.instance.reference();
 		final rawItems = await ref.child("orders").child(kind.get()).child(id).get();
+
+    var value = rawItems.value as Map<dynamic, dynamic>;
+
+    if (Platform.isIOS) {
+      value = value[id] as Map<dynamic, dynamic>;
+    }
+
 		final items = IrohaOrder.fromJson(
 			id,
-			rawItems.value as Map<dynamic, dynamic>,
+			value,
 			MenuItems.getMenu(kind)
 		);
 
