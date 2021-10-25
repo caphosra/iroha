@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
+import "package:iroha/widgets/common-dialog.dart";
 import "package:iroha/widgets/foods-table.dart";
 import "package:iroha/widgets/orders-board/order-button.dart";
 import "package:iroha/models/order.dart";
@@ -28,80 +29,34 @@ class IrohaOrderView extends StatelessWidget {
 		);
     }
 
-	void _onDeleteButtonClicked(BuildContext context) {
-		Widget cancelButton = TextButton(
-			child: Text("やっぱりやめる"),
-			onPressed:  () {
-				Navigator.of(context).pop();
-			},
-		);
-		Widget continueButton = Consumer(
-			builder: (context, watch, child) {
-				return TextButton(
-					child: Text("もちろん"),
-					onPressed:  () {
-						context
-							.read(eatInOrdersProvider.notifier)
-							.delete(data.id);
-						Navigator.of(context).pop();
-
-						onListChanged();
-					}
-				);
-			}
+	Future<void> _onDeleteButtonClicked(BuildContext context) async {
+		final result = await IrohaCommonDialog.showConfirm(
+			context,
+			"本当にこの注文を削除しますか?"
 		);
 
-		showDialog(
-			context: context,
-			builder: (BuildContext ctx) {
-				return AlertDialog(
-					title: Text("確認"),
-					content: Text("本当にこの注文を削除しますか?"),
-					actions: [
-						cancelButton,
-						continueButton,
-					]
-				);
-			}
-		);
+		if (result) {
+			context
+				.read(eatInOrdersProvider.notifier)
+				.delete(data.id);
+
+			onListChanged();
+		}
 	}
 
-	void _onDoneButtonClicked(BuildContext context) {
-		Widget cancelButton = TextButton(
-			child: Text("やっぱりやめる"),
-			onPressed:  () {
-				Navigator.of(context).pop();
-			},
-		);
-		Widget continueButton = Consumer(
-			builder: (context, watch, child) {
-				return TextButton(
-					child: Text("もちろん"),
-					onPressed:  () {
-						context
-							.read(eatInOrdersProvider.notifier)
-							.markAs(data.id, IrohaOrderStatus.SERVED, DateTime.now());
-						Navigator.of(context).pop();
-
-						onListChanged();
-					}
-				);
-			}
+	Future<void> _onDoneButtonClicked(BuildContext context) async {
+		final result = await IrohaCommonDialog.showConfirm(
+			context,
+			"本当にこの注文のお届けは終わりましたか?"
 		);
 
-		showDialog(
-			context: context,
-			builder: (BuildContext ctx) {
-				return AlertDialog(
-					title: Text("確認"),
-					content: Text("本当にこの注文のお届けは終わりましたか?"),
-					actions: [
-						cancelButton,
-						continueButton,
-					]
-				);
-			}
-		);
+		if (result) {
+			context
+				.read(eatInOrdersProvider.notifier)
+				.markAs(data.id, IrohaOrderStatus.SERVED, DateTime.now());
+
+			onListChanged();
+		}
 	}
 
 	Widget _buildContent(BuildContext context) {
