@@ -31,8 +31,8 @@ class IrohaOrderView extends StatelessWidget {
 
 	Future<void> _onDeleteButtonClicked(BuildContext context) async {
 		final result = await IrohaCommonDialog.showConfirm(
-		context,
-		"本当にこの注文を削除しますか?"
+			context,
+			"本当にこの注文を削除しますか?"
 		);
 
 		if (result) {
@@ -44,42 +44,19 @@ class IrohaOrderView extends StatelessWidget {
 		}
 	}
 
-	void _onDoneButtonClicked(BuildContext context) {
-		Widget cancelButton = TextButton(
-			child: Text("やっぱりやめる"),
-			onPressed:  () {
-				Navigator.of(context).pop();
-			},
-		);
-		Widget continueButton = Consumer(
-			builder: (context, watch, child) {
-				return TextButton(
-					child: Text("もちろん"),
-					onPressed:  () {
-						context
-							.read(eatInOrdersProvider.notifier)
-							.markAs(data.id, IrohaOrderStatus.SERVED, DateTime.now());
-						Navigator.of(context).pop();
-
-						onListChanged();
-					}
-				);
-			}
+	Future<void> _onDoneButtonClicked(BuildContext context) async {
+		final result = await IrohaCommonDialog.showConfirm(
+			context,
+			"本当にこの注文のお届けは終わりましたか?"
 		);
 
-		showDialog(
-			context: context,
-			builder: (BuildContext ctx) {
-				return AlertDialog(
-					title: Text("確認"),
-					content: Text("本当にこの注文のお届けは終わりましたか?"),
-					actions: [
-						cancelButton,
-						continueButton,
-					]
-				);
-			}
-		);
+		if (result) {
+			context
+				.read(eatInOrdersProvider.notifier)
+				.markAs(data.id, IrohaOrderStatus.SERVED, DateTime.now());
+
+			onListChanged();
+		}
 	}
 
 	Widget _buildContent(BuildContext context) {
