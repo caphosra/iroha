@@ -4,6 +4,7 @@ import "package:iroha/models/config.dart";
 import "package:iroha/models/order-kind.dart";
 import "package:iroha/models/order.dart";
 import "package:iroha/widgets/cashier-dialog.dart";
+import "package:iroha/widgets/common-dialog.dart";
 import "package:iroha/widgets/header.dart";
 
 class IrohaCashier extends StatefulWidget {
@@ -90,22 +91,9 @@ class _IrohaCashierState extends State<IrohaCashier> {
 					.markAs(order.id, IrohaOrderStatus.PAID, DateTime.now());
 			}
 
-			await showDialog(
-				context: context,
-				builder: (BuildContext ctx) {
-					return AlertDialog(
-						title: Text("完了"),
-						content: Text("サーバーに送信しました。"),
-						actions: [
-							TextButton(
-								onPressed: () {
-									Navigator.of(context).pop();
-								},
-								child: Text("OK")
-							)
-						]
-					);
-				}
+			await IrohaCommonDialog.showDone(
+				context,
+				"サーバーに送信しました。"
 			);
 		}
 	}
