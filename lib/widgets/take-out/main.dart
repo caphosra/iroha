@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:hooks_riverpod/hooks_riverpod.dart";
 import "package:iroha/models/menu-items.dart";
 import "package:iroha/models/order-kind.dart";
 import "package:iroha/models/order.dart";
@@ -84,14 +85,18 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
 	}
 
 	Future<void> _onPaymentButtonClicked() async {
-		bool isPaid = await IrohaCashierDialog.show(
+		final isPaid = await IrohaCashierDialog.show(
 			context,
 			IrohaFoodCount.toList(_menuItemCounter),
 			IrohaFoodCount.getPrice(_menuItemCounter, IrohaOrderKind.TAKE_OUT)
 		);
 
 		if (isPaid) {
-			await IrohaCommonDialog.showDone(
+			await context
+        .read(takeOutOrdersProvider.notifier)
+        .add(1, _menuItemCounter);
+
+      await IrohaCommonDialog.showDone(
 				context,
 				"サーバーに送信しました。"
 			);
