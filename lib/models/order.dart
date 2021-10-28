@@ -116,12 +116,12 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 			foods: foods
 		);
 		final ref = FirebaseDatabase.instance.reference();
-		ref.child("orders").child(kind.get()).child(uuid).set(order.toJson());
+		await ref.child("orders").child(kind.get()).child(uuid).set(order.toJson());
 	}
 
 	Future<void> delete(String id) async {
 		final ref = FirebaseDatabase.instance.reference();
-		ref.child("orders").child(kind.get()).child(id).remove();
+		await ref.child("orders").child(kind.get()).child(id).remove();
 	}
 
 	Future<void> update() async {
@@ -146,6 +146,11 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 
 		items.markAs(status, time);
 		await ref.child("orders").child(kind.get()).child(id).set(items.toJson());
+	}
+
+	Future<void> resetAll() async {
+		final ref = FirebaseDatabase.instance.reference();
+		await ref.child("orders").remove();
 	}
 
 	Future<void> keepWatching() async {
