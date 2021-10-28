@@ -1,7 +1,6 @@
-import "dart:io";
-
 import "package:firebase_database/firebase_database.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:iroha/models/device-manager.dart";
 import "package:iroha/models/menu-items.dart";
 import "package:iroha/models/order-kind.dart";
 import "package:uuid/uuid.dart";
@@ -117,12 +116,12 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 			foods: foods
 		);
 		final ref = FirebaseDatabase.instance.reference();
-		ref.child("orders").child(kind.get()).child(uuid).set(order.toJson());
+		await ref.child("orders").child(kind.get()).child(uuid).set(order.toJson());
 	}
 
 	Future<void> delete(String id) async {
 		final ref = FirebaseDatabase.instance.reference();
-		ref.child("orders").child(kind.get()).child(id).remove();
+		await ref.child("orders").child(kind.get()).child(id).remove();
 	}
 
 	Future<void> update() async {
@@ -133,11 +132,11 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 		final ref = FirebaseDatabase.instance.reference();
 		final rawItems = await ref.child("orders").child(kind.get()).child(id).get();
 
-    var value = rawItems.value as Map<dynamic, dynamic>;
+		var value = rawItems.value as Map<dynamic, dynamic>;
 
-    if (Platform.isIOS) {
-      value = value[id] as Map<dynamic, dynamic>;
-    }
+		if (DeviceManager.isIOS()) {
+			value = value[id] as Map<dynamic, dynamic>;
+		}
 
 		final items = IrohaOrder.fromJson(
 			id,
@@ -147,6 +146,11 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
 
 		items.markAs(status, time);
 		await ref.child("orders").child(kind.get()).child(id).set(items.toJson());
+	}
+
+	Future<void> resetAll() async {
+		final ref = FirebaseDatabase.instance.reference();
+		await ref.child("orders").remove();
 	}
 
 	Future<void> keepWatching() async {

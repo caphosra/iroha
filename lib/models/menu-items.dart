@@ -32,7 +32,7 @@ class MenuItems {
 	Future<void> update() async {
 		final ref = FirebaseDatabase.instance.reference();
 		final rawItems = await ref.child("menu-items").child(kind.get()).get();
-		final values = rawItems.value as Map<dynamic, dynamic>;
+		final values = (rawItems.value ?? { }) as Map<dynamic, dynamic>;
 		items = values.entries
 			.map((item) => IrohaMenuItem.fromJson(item.value))
 			.toList();

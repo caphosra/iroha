@@ -3,7 +3,7 @@ import "package:iroha/models/menu-items.dart";
 import "package:iroha/models/order-kind.dart";
 import "package:iroha/models/order.dart";
 import "package:iroha/widgets/cashier-dialog.dart";
-import 'package:iroha/widgets/common-dialog.dart';
+import "package:iroha/widgets/common-dialog.dart";
 import "package:iroha/widgets/foods-table.dart";
 import "package:iroha/widgets/header.dart";
 

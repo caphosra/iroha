@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
-import 'package:iroha/widgets/common-dialog.dart';
+import "package:iroha/widgets/common-dialog.dart";
 import "package:iroha/widgets/foods-table.dart";
 import "package:iroha/widgets/orders-board/order-button.dart";
 import "package:iroha/models/order.dart";
