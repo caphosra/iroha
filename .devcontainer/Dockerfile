@@ -12,5 +12,5 @@ RUN \
     rm -rf /var/lib/apt/lists/*; \
     mkdir /home/codespace; \
     cd /home/codespace; \
-    git clone https://github.com/flutter/flutter --depth 1; \
+    git clone https://github.com/flutter/flutter -b stable --depth 1; \
     /home/codespace/flutter/bin/flutter config --enable-web;
