@@ -22,7 +22,7 @@ class IrohaFoodsTable<T> extends StatelessWidget {
 				Center(
 					child: ConstrainedBox(
 						constraints: BoxConstraints(
-							maxHeight: MediaQuery.of(context).size.height * 0.6,
+							maxHeight: MediaQuery.of(context).size.height * 0.4,
 						),
 						child: SingleChildScrollView(
 							scrollDirection: Axis.vertical,
