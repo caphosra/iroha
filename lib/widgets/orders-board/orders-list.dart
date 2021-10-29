@@ -27,7 +27,11 @@ class _IrohaOrdersListViewState extends State<IrohaOrdersListView> {
           .toList();
 
       return Stack(children: [
-        IrohaWithHeader(text: '調理', children: ordersWidgets),
+        IrohaWithHeader(text: '調理', children: [
+          Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Center(child: Wrap(children: ordersWidgets)))
+        ]),
         Positioned(
             child: FloatingActionButton(
                 child: const Icon(Icons.edit),

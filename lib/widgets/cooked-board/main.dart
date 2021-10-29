@@ -23,7 +23,11 @@ class _IrohaCookedBoardState extends State<IrohaCookedBoard> {
               IrohaOrderView(data: data, onListChanged: onListChanged))
           .toList();
 
-      return IrohaWithHeader(text: '提供', children: ordersWidgets);
+      return IrohaWithHeader(text: '提供', children: [
+        Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Center(child: Wrap(children: ordersWidgets)))
+      ]);
     });
   }
 

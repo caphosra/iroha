@@ -21,7 +21,7 @@ class IrohaOrderView extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         margin: EdgeInsets.all(5),
-        width: 200,
+        width: 300,
         child: Container(
             margin: EdgeInsets.all(5),
             child: Center(child: _buildContent(context))));
