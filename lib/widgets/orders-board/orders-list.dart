@@ -20,11 +20,13 @@ class _IrohaOrdersListViewState extends State<IrohaOrdersListView> {
     return Consumer(builder: (context, watch, child) {
       var orders = watch(eatInOrdersProvider);
 
-      var ordersWidgets = orders
+      List<Widget> ordersWidgets = orders
           .where((data) => data.cooked == null)
           .map((data) =>
               IrohaOrderView(data: data, onListChanged: onListChanged))
           .toList();
+
+      ordersWidgets.insert(0, _getAllOrders(orders));
 
       return Stack(children: [
         IrohaWithHeader(text: '調理', children: [
@@ -40,6 +42,24 @@ class _IrohaOrdersListViewState extends State<IrohaOrdersListView> {
             right: 30)
       ]);
     });
+  }
+
+  Widget _getAllOrders(List<IrohaOrder> orders) {
+    final counter = Map<String, int>();
+    for (final order in orders) {
+      if (order.cooked != null) continue;
+      for (final item in order.foods.entries) {
+        counter[item.key] = (counter[item.key] ?? 0) + item.value;
+      }
+    }
+    final data = IrohaOrder(
+        id: "top", posted: DateTime.now(), tableNumber: 0, foods: counter);
+    return IrohaOrderView(
+        data: data,
+        onListChanged: () {},
+        color: Colors.red,
+        showTime: false,
+        showButtons: false);
   }
 
   onListChanged() {

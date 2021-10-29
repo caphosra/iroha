@@ -3,15 +3,20 @@ import 'package:flutter/material.dart';
 class IrohaFoodsTable<T> extends StatelessWidget {
   final List<T> data;
   final Widget? Function(BuildContext context, T item) builder;
+  final Color color;
 
-  IrohaFoodsTable({required this.data, required this.builder, Key? key})
+  IrohaFoodsTable(
+      {required this.data,
+      required this.builder,
+      this.color = Colors.blue,
+      Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListBody(
       children: [
-        Container(margin: EdgeInsets.all(5), height: 2, color: Colors.blue),
+        Container(margin: EdgeInsets.all(5), height: 2, color: color),
         Center(
             child: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -52,7 +57,7 @@ class IrohaFoodsTable<T> extends StatelessWidget {
                                 .where((widget) => widget != null)
                                 .map((widget) => widget ?? DataRow(cells: []))
                                 .toList()))))),
-        Container(margin: EdgeInsets.all(5), height: 2, color: Colors.blue)
+        Container(margin: EdgeInsets.all(5), height: 2, color: color)
       ],
     );
   }
