@@ -1,57 +1,51 @@
-import "package:flutter/material.dart";
-import "package:iroha/widgets/home/logo.dart";
-import "package:iroha/widgets/home/status.dart";
+import 'package:flutter/material.dart';
+import 'package:iroha/widgets/home/logo.dart';
+import 'package:iroha/widgets/home/status.dart';
 
 class IrohaHome extends StatefulWidget {
-    IrohaHome({Key? key}) : super(key: key);
+  IrohaHome({Key? key}) : super(key: key);
 
-    @override
-    _IrohaHomeState createState() => _IrohaHomeState();
+  @override
+  _IrohaHomeState createState() => _IrohaHomeState();
 }
 
-class _IrohaHomeState extends State<IrohaHome> with SingleTickerProviderStateMixin {
-	late AnimationController _animationController;
+class _IrohaHomeState extends State<IrohaHome>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
 
-	@override
-    Widget build(BuildContext context) {
-        return Center(
-			child: Column(
-				mainAxisAlignment: MainAxisAlignment.center,
-				children: <Widget>[
-					IrohaLogo(logoImagePath: "assets/logo.png"),
-					AnimatedBuilder(
-						animation: _animationController,
-						builder: (context, _) {
-							return Opacity(
-								opacity: _animationController.value,
-								child: IrohaStatusBox(text: "Irohaへようこそ")
-							);
-						}
-					)
-				]
-			)
-		);
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+          IrohaLogo(logoImagePath: 'assets/logo.png'),
+          AnimatedBuilder(
+              animation: _animationController,
+              builder: (context, _) {
+                return Opacity(
+                    opacity: _animationController.value,
+                    child: IrohaStatusBox(text: 'Irohaへようこそ'));
+              })
+        ]));
+  }
 
-	@override
-	void dispose() {
-		this._animationController.dispose();
+  @override
+  void dispose() {
+    this._animationController.dispose();
 
-		super.dispose();
-	}
+    super.dispose();
+  }
 
-	@override
-	void initState() {
-    	_animationController = AnimationController(
-			vsync: this,
-			duration: const Duration(milliseconds: 5000)
-		);
+  @override
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 5000));
 
-		_animationController
-			.drive(CurveTween(curve: Curves.easeOutCirc));
+    _animationController.drive(CurveTween(curve: Curves.easeOutCirc));
 
-		_animationController.repeat(reverse: true);
+    _animationController.repeat(reverse: true);
 
-		super.initState();
-  	}
+    super.initState();
+  }
 }
