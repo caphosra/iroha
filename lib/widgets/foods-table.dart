@@ -15,8 +15,8 @@ class IrohaFoodsTable<T> extends StatelessWidget {
         Center(
             child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.4,
-                ),
+                    maxHeight: MediaQuery.of(context).size.height * 0.4,
+                    minWidth: 300),
                 child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: SingleChildScrollView(
@@ -37,15 +37,15 @@ class IrohaFoodsTable<T> extends StatelessWidget {
                                     return null;
                                   } else {
                                     return DataRow(cells: [
-                                      DataCell(ConstrainedBox(
-                                        constraints:
-                                            BoxConstraints(maxWidth: 130),
-                                        child: Container(
+                                      DataCell(
+                                        Container(
+                                          width: 150,
                                           child: Text(item.toString(),
                                               style: TextStyle(fontSize: 15)),
                                         ),
-                                      )),
-                                      DataCell(widget)
+                                      ),
+                                      DataCell(
+                                          Container(width: 50, child: widget))
                                     ]);
                                   }
                                 })
