@@ -15,7 +15,7 @@ class IrohaStatusBox extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(30)),
             child: Container(
                 child: Container(
-                    margin: EdgeInsets.all(20),
+                    margin: EdgeInsets.all(15),
                     child: Text(this.text,
                         style: TextStyle(fontSize: 30, color: Colors.white))),
                 color: Colors.blue)));

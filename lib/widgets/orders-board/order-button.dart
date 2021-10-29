@@ -18,7 +18,7 @@ class IrohaOrderButton extends StatelessWidget {
         child: Container(
             padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
             child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
                 child: Container(
                     color: color,
                     child: TextButton(

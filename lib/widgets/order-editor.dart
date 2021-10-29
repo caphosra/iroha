@@ -27,7 +27,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
               width: MediaQuery.of(context).size.width * 0.2,
               child: _buildTableDropDown(context),
             ),
-            Text('番テーブル', style: TextStyle(fontSize: 25))
+            Text('番テーブル', style: TextStyle(fontSize: 15))
           ]),
           _buildFoodsTable(context)
         ]);
@@ -57,7 +57,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
                   width: MediaQuery.of(context).size.width,
                   child: Text(
                     i.toString(),
-                    style: TextStyle(fontSize: 25),
+                    style: TextStyle(fontSize: 15),
                     textAlign: TextAlign.right,
                   )),
               value: i,
@@ -81,7 +81,7 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
               items: [
                 for (int i = 0; i <= 5; i++)
                   DropdownMenuItem(
-                    child: Text(i.toString(), style: TextStyle(fontSize: 20)),
+                    child: Text(i.toString(), style: TextStyle(fontSize: 15)),
                     value: i,
                   )
               ],

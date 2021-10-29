@@ -11,7 +11,7 @@ class IrohaFoodsTable<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListBody(
       children: [
-        Container(margin: EdgeInsets.all(10), height: 2, color: Colors.blue),
+        Container(margin: EdgeInsets.all(5), height: 2, color: Colors.blue),
         Center(
             child: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -25,10 +25,10 @@ class IrohaFoodsTable<T> extends StatelessWidget {
                             columns: [
                               DataColumn(
                                   label: Text('料理',
-                                      style: TextStyle(fontSize: 20))),
+                                      style: TextStyle(fontSize: 15))),
                               DataColumn(
                                   label: Text('個数',
-                                      style: TextStyle(fontSize: 20)))
+                                      style: TextStyle(fontSize: 15)))
                             ],
                             rows: data
                                 .map((item) {
@@ -38,7 +38,7 @@ class IrohaFoodsTable<T> extends StatelessWidget {
                                   } else {
                                     return DataRow(cells: [
                                       DataCell(Text(item.toString(),
-                                          style: TextStyle(fontSize: 20))),
+                                          style: TextStyle(fontSize: 15))),
                                       DataCell(widget)
                                     ]);
                                   }
@@ -46,7 +46,7 @@ class IrohaFoodsTable<T> extends StatelessWidget {
                                 .where((widget) => widget != null)
                                 .map((widget) => widget ?? DataRow(cells: []))
                                 .toList()))))),
-        Container(margin: EdgeInsets.all(10), height: 2, color: Colors.blue)
+        Container(margin: EdgeInsets.all(5), height: 2, color: Colors.blue)
       ],
     );
   }

@@ -46,7 +46,7 @@ class _IrohaMenuViewerState extends State<IrohaMenuViewer> {
                     .toList(),
                 showSaveIcon: true,
                 saveIconColor: Colors.blue,
-                saveIconSize: 25,
+                saveIconSize: 15,
                 showCreateButton: true)));
   }
 

@@ -25,14 +25,14 @@ class _IrohaCashierState extends State<IrohaCashier> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(15),
                 child: DropdownButton<int>(
                     value: _tableNumber,
                     items: [
                       for (int i = 1; i <= IrohaConfig.tableCount; i++)
                         DropdownMenuItem(
                           child:
-                              Text('$i番テーブル', style: TextStyle(fontSize: 25)),
+                              Text('$i番テーブル', style: TextStyle(fontSize: 15)),
                           value: i,
                         )
                     ],
@@ -46,7 +46,7 @@ class _IrohaCashierState extends State<IrohaCashier> {
 
               return TextButton(
                   onPressed: () => onPaymentButtonPressed(context, orders),
-                  child: Text('支払いへ進む', style: TextStyle(fontSize: 20)));
+                  child: Text('支払いへ進む', style: TextStyle(fontSize: 15)));
             })
           ])
     ]);

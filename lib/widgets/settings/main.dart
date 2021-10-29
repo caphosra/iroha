@@ -21,10 +21,10 @@ class _SubtitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.fromLTRB(0, 25, 0, 10),
+        padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
         child: Text(text,
             style: TextStyle(
-                fontSize: 25,
+                fontSize: 15,
                 decoration: TextDecoration.underline,
                 color: Colors.transparent,
                 shadows: [Shadow(color: Colors.black, offset: Offset(0, -5))],
@@ -45,7 +45,7 @@ class _IrohaSettingsState extends State<IrohaSettings> {
                 padding: EdgeInsets.all(10),
                 child: _SubtitleText(text: 'サーバーデータ')),
             Text('サーバーデータをExcelファイルとしてダウンロードしたり初期化したりできます。',
-                style: TextStyle(fontSize: 20)),
+                style: TextStyle(fontSize: 15)),
             Consumer(builder: (context, watch, child) {
               var eatInOrders = watch(eatInOrdersProvider);
               var takeOutOrders = watch(takeOutOrdersProvider);
@@ -55,13 +55,13 @@ class _IrohaSettingsState extends State<IrohaSettings> {
                   child: TextButton(
                       onPressed: () =>
                           _downloadOrders(eatInOrders, takeOutOrders),
-                      child: Text('ダウンロード', style: TextStyle(fontSize: 20))));
+                      child: Text('ダウンロード', style: TextStyle(fontSize: 15))));
             }),
             Container(
                 padding: EdgeInsets.all(10),
                 child: TextButton(
                     onPressed: () {},
-                    child: Text('初期化', style: TextStyle(fontSize: 20)))),
+                    child: Text('初期化', style: TextStyle(fontSize: 15)))),
             _SubtitleText(text: 'メニューの編集'),
             IrohaMenuViewer()
           ])

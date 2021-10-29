@@ -4,6 +4,7 @@ import 'package:iroha/widgets/common-dialog.dart';
 import 'package:iroha/widgets/foods-table.dart';
 import 'package:iroha/widgets/orders-board/order-button.dart';
 import 'package:iroha/models/order.dart';
+import 'package:iroha/widgets/waiting-time.dart';
 
 class IrohaOrderView extends StatelessWidget {
   final IrohaOrder data;
@@ -17,12 +18,12 @@ class IrohaOrderView extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.blue),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(15),
         ),
-        margin: EdgeInsets.all(20),
-        width: 350,
+        margin: EdgeInsets.all(5),
+        width: 200,
         child: Container(
-            margin: EdgeInsets.all(20),
+            margin: EdgeInsets.all(5),
             child: Center(child: _buildContent(context))));
   }
 
@@ -54,7 +55,7 @@ class IrohaOrderView extends StatelessWidget {
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text('${data.tableNumber}番テーブル', style: TextStyle(fontSize: 25)),
+          Text('${data.tableNumber}番テーブル', style: TextStyle(fontSize: 15)),
           IrohaFoodsTable(
               data: data.getCounts(),
               builder: (context, IrohaFoodCount food) {
@@ -62,9 +63,10 @@ class IrohaOrderView extends StatelessWidget {
                   return null;
                 } else {
                   return Text(food.count.toString(),
-                      style: TextStyle(fontSize: 20));
+                      style: TextStyle(fontSize: 15));
                 }
               }),
+          IrohaWaitingTime(duration: DateTime.now().difference(data.posted)),
           Row(children: [
             IrohaOrderButton(
                 icon: Icons.check,

@@ -28,7 +28,7 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
             _buildFoodsTable(context),
             TextButton(
                 onPressed: _onPaymentButtonClicked,
-                child: Text('支払いへ進む', style: TextStyle(fontSize: 20)))
+                child: Text('支払いへ進む', style: TextStyle(fontSize: 15)))
           ])
     ]);
   }
@@ -55,7 +55,7 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
               items: [
                 for (int i = 0; i <= 5; i++)
                   DropdownMenuItem(
-                    child: Text(i.toString(), style: TextStyle(fontSize: 20)),
+                    child: Text(i.toString(), style: TextStyle(fontSize: 15)),
                     value: i,
                   )
               ],

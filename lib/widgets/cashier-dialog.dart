@@ -35,6 +35,6 @@ class IrohaCashierDialog {
   }
 
   static Widget _buildTable(BuildContext context, IrohaFoodCount food) {
-    return Text(food.count.toString(), style: TextStyle(fontSize: 20));
+    return Text(food.count.toString(), style: TextStyle(fontSize: 15));
   }
 }
