@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -89,9 +88,7 @@ class _IrohaAppViewState extends State<IrohaAppView> {
           child: _items
               .where((page) => (!page.isAdminOnly) || DeviceManager.isAdmin())
               .map((page) {
-            return Container(
-                width: min(MediaQuery.of(context).size.width, 500),
-                child: page.widget);
+            return page.widget;
           }).elementAt(_selectedIndex),
         ),
         extendBody: true,
