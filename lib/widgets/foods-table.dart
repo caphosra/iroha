@@ -37,8 +37,14 @@ class IrohaFoodsTable<T> extends StatelessWidget {
                                     return null;
                                   } else {
                                     return DataRow(cells: [
-                                      DataCell(Text(item.toString(),
-                                          style: TextStyle(fontSize: 15))),
+                                      DataCell(ConstrainedBox(
+                                        constraints:
+                                            BoxConstraints(maxWidth: 130),
+                                        child: Container(
+                                          child: Text(item.toString(),
+                                              style: TextStyle(fontSize: 15)),
+                                        ),
+                                      )),
                                       DataCell(widget)
                                     ]);
                                   }
