@@ -38,5 +38,7 @@ jobs:
     # Test the code
     - run: flutter analyze .
       name: Analyze the code
+    - run: flutter format . --set-exit-if-changed
+      name: Check whether the files are formated
     - run: flutter test
       name: Run test
