@@ -17,7 +17,7 @@ class _IrohaCookedBoardState extends State<IrohaCookedBoard> {
     return Consumer(builder: (context, watch, child) {
       var orders = watch(eatInOrdersProvider);
 
-      orders = orders.where((data) => data.cooked == null).toList();
+      orders = orders.where((data) => data.served == null).toList();
       orders.sort((a, b) =>
           a.posted.millisecondsSinceEpoch - b.posted.millisecondsSinceEpoch);
       List<Widget> ordersWidgets = orders
