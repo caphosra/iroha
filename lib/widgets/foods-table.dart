@@ -18,45 +18,42 @@ class IrohaFoodsTable<T> extends StatelessWidget {
       children: [
         Container(margin: EdgeInsets.all(5), height: 2, color: color),
         Center(
-            child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height * 0.4,
-                    minWidth: 300),
-                child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
+            child: Container(
+                width: 300,
+                margin: EdgeInsets.all(10),
+                child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height * 0.4),
                     child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                            columns: [
-                              DataColumn(
-                                  label: Text('料理',
-                                      style: TextStyle(fontSize: 15))),
-                              DataColumn(
-                                  label: Text('個数',
-                                      style: TextStyle(fontSize: 15)))
-                            ],
-                            rows: data
-                                .map((item) {
-                                  final widget = builder(context, item);
-                                  if (widget == null) {
-                                    return null;
-                                  } else {
-                                    return DataRow(cells: [
-                                      DataCell(
-                                        Container(
-                                          width: 150,
-                                          child: Text(item.toString(),
-                                              style: TextStyle(fontSize: 15)),
-                                        ),
-                                      ),
-                                      DataCell(
-                                          Container(width: 50, child: widget))
-                                    ]);
-                                  }
-                                })
-                                .where((widget) => widget != null)
-                                .map((widget) => widget ?? DataRow(cells: []))
-                                .toList()))))),
+                        scrollDirection: Axis.vertical,
+                        //child: SingleChildScrollView(
+                        // scrollDirection: Axis.horizontal,
+                        child: Center(
+                            child: Column(
+                                children: data
+                                    .map((item) {
+                                      final widget = builder(context, item);
+                                      if (widget == null) {
+                                        return null;
+                                      } else {
+                                        return Container(
+                                            margin: EdgeInsets.all(5),
+                                            child: Row(children: [
+                                              Container(
+                                                width: 180,
+                                                child: Text(item.toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 15)),
+                                              ),
+                                              Container(
+                                                  width: 40,
+                                                  child: Center(child: widget))
+                                            ]));
+                                      }
+                                    })
+                                    .where((widget) => widget != null)
+                                    .map((widget) => widget ?? Container())
+                                    .toList())))))),
         Container(margin: EdgeInsets.all(5), height: 2, color: color)
       ],
     );
