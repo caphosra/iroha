@@ -20,12 +20,13 @@ class _IrohaOrdersListViewState extends State<IrohaOrdersListView> {
     return Consumer(builder: (context, watch, child) {
       var orders = watch(eatInOrdersProvider);
 
+      orders = orders.where((data) => data.cooked == null).toList();
+      orders.sort((a, b) =>
+          a.posted.millisecondsSinceEpoch - b.posted.millisecondsSinceEpoch);
       List<Widget> ordersWidgets = orders
-          .where((data) => data.cooked == null)
           .map((data) =>
               IrohaOrderView(data: data, onListChanged: onListChanged))
           .toList();
-
       ordersWidgets.insert(0, _getAllOrders(orders));
 
       return Stack(children: [

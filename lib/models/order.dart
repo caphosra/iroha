@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 
 typedef IrohaMenuID = String;
 
-class IrohaOrder {
+class IrohaOrder extends Comparable<IrohaOrder> {
   final String id;
   final int tableNumber;
   DateTime posted;
@@ -69,6 +69,13 @@ class IrohaOrder {
       order.foods[item] = json[item];
     }
     return order;
+  }
+
+  @override
+  int compareTo(IrohaOrder other) {
+    final duration =
+        posted.millisecondsSinceEpoch - other.posted.millisecondsSinceEpoch;
+    return duration;
   }
 }
 
