@@ -3,13 +3,31 @@ import 'package:iroha/models/menu-items.dart';
 import 'package:iroha/models/order-kind.dart';
 import 'package:iroha/models/order.dart';
 
+///
+/// サーバー上のデータをExcelファイルとして出力するもの
+///
+/// 詳しくは[excel (package)](https://pub.dev/packages/excel)を参照すること。
+///
 class ExcelExporter {
+  ///
+  /// Excelファイルを表現しているアイテム
+  ///
   late Excel _excel;
 
+  ///
+  /// サーバー上のデータをExcelファイルとして出力するもの
+  ///
+  /// 詳しくは[excel (package)](https://pub.dev/packages/excel)を参照すること。
+  ///
   ExcelExporter() {
     _excel = Excel.createExcel();
   }
 
+  ///
+  /// メニューのデータをExcelファイルに書き込みます。
+  ///
+  /// 具体的には'メニュー'という名前のシートに書き込まれます。
+  ///
   void generateMenuItemsPage() {
     final sheet = _excel['メニュー'];
 
@@ -39,6 +57,9 @@ class ExcelExporter {
     }
   }
 
+  ///
+  /// 注文のデータをExcelファイルに書き込みます。
+  ///
   void generateOrdersPage(IrohaOrderKind kind, List<IrohaOrder> orders) {
     final sheet = _excel[kind.getJapaneseName()];
 
@@ -94,6 +115,9 @@ class ExcelExporter {
     }
   }
 
+  ///
+  /// 時間を`yyyy/mm/dd hh:mm`という書式の文字列に変換します。
+  ///
   String _dateTimeToString(DateTime? time) {
     if (time == null) {
       return '';
@@ -104,12 +128,21 @@ class ExcelExporter {
     }
   }
 
+  ///
+  /// Excelファイルの名前を取得します。
+  ///
   String _getFileName() {
     var date = _dateTimeToString(DateTime.now());
     date = date.replaceAll(RegExp(r'[/\s:]'), '-');
     return '売上情報-$date.xlsx';
   }
 
+  ///
+  /// Excelファイルを保存します。
+  ///
+  /// 環境によって保存する方法が変わるので、
+  /// 詳しくは[excel (package)](https://pub.dev/packages/excel)を参照すること。
+  ///
   void save() {
     _excel.delete('Sheet1');
     _excel.save(fileName: _getFileName());

@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
+///
+/// Irohaのロゴを表示するUI
+///
 class IrohaLogo extends StatelessWidget {
+  ///
+  /// Irohaのロゴへのパス
+  ///
   final String logoImagePath;
 
-  IrohaLogo({required this.logoImagePath, Key? key}) : super(key: key);
+  ///
+  /// Irohaのロゴを表示するUI
+  ///
+  const IrohaLogo({required this.logoImagePath, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -4,16 +4,32 @@ import 'package:iroha/models/order.dart';
 import 'package:iroha/widgets/order-editor.dart';
 import 'package:iroha/widgets/orders-board/orders-list.dart';
 
+///
+/// 投稿済みの注文を表示するUI
+///
 class IrohaOrdersBoard extends StatefulWidget {
+  ///
+  /// 投稿済みの注文を表示するUI
+  ///
   IrohaOrdersBoard({Key? key}) : super(key: key);
 
   @override
   _IrohaOrdersBoardState createState() => _IrohaOrdersBoardState();
 }
 
+///
+/// [IrohaOrdersBoard] の状態
+///
 class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
+  ///
+  /// テーブル番号
+  ///
   int _tableNumber = 1;
-  Map<String, int> _menuItemCounter = <String, int>{};
+
+  ///
+  /// 料理が注文された数
+  ///
+  Map<String, int> _menuItemCounter = {};
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +37,15 @@ class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
         onAddButtonClicked: () => _changeEditMode(context));
   }
 
-  void _changeEditMode(BuildContext context) {
-    showDialog(
+  ///
+  /// **[非同期]** 注文を追加するモードに切り替えます。
+  ///
+  Future<void> _changeEditMode(BuildContext context) async {
+    await showDialog(
         context: context,
         builder: (_) {
           return AlertDialog(
-              title: Text('注文を追加'),
+              title: const Text('注文を追加'),
               content: IrohaOrderEditor(
                 onOrderUpdated: _onOrderUpdated,
               ),
@@ -35,24 +54,31 @@ class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
                     (BuildContext context, ScopedReader watch, Widget? child) {
                   return TextButton(
                       onPressed: () => _onAddButtonClicked(context, watch),
-                      child: Text('追加'));
+                      child: const Text('追加'));
                 }),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('キャンセル'))
+                    child: const Text('キャンセル'))
               ]);
         });
   }
 
+  ///
+  /// 注文が更新された時の処理を行います。
+  ///
   void _onOrderUpdated(int tableNumber, Map<String, int> order) {
     _tableNumber = tableNumber;
     _menuItemCounter = order;
   }
 
-  void _onAddButtonClicked(BuildContext context, ScopedReader watch) {
-    context
+  ///
+  /// **[非同期]** 追加ボタンが押された時の処理を行います。
+  ///
+  Future<void> _onAddButtonClicked(
+      BuildContext context, ScopedReader watch) async {
+    await context
         .read(eatInOrdersProvider.notifier)
         .add(_tableNumber, _menuItemCounter);
 

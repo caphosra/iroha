@@ -6,10 +6,23 @@ import 'package:iroha/widgets/orders-board/order-button.dart';
 import 'package:iroha/models/order.dart';
 import 'package:iroha/widgets/waiting-time.dart';
 
+///
+/// 注文を表示するUI
+///
 class IrohaOrderView extends StatelessWidget {
+  ///
+  /// 注文のデータ
+  ///
   final IrohaOrder data;
+
+  ///
+  /// 注文が更新される時の処理
+  ///
   final void Function() onListChanged;
 
+  ///
+  /// 注文を表示するUI
+  ///
   IrohaOrderView({required this.data, required this.onListChanged, Key? key})
       : super(key: key);
 
@@ -20,13 +33,16 @@ class IrohaOrderView extends StatelessWidget {
           border: Border.all(color: Colors.blue),
           borderRadius: BorderRadius.circular(15),
         ),
-        margin: EdgeInsets.all(5),
+        margin: const EdgeInsets.all(5),
         width: 300,
         child: Container(
-            margin: EdgeInsets.all(5),
+            margin: const EdgeInsets.all(5),
             child: Center(child: _buildContent(context))));
   }
 
+  ///
+  /// 注文の削除ボタンが押された時の処理を行います。
+  ///
   Future<void> _onDeleteButtonClicked(BuildContext context) async {
     final result =
         await IrohaCommonDialog.showConfirm(context, '本当にこの注文を削除しますか?');
@@ -38,6 +54,9 @@ class IrohaOrderView extends StatelessWidget {
     }
   }
 
+  ///
+  /// 注文の完了ボタンが押された時の処理を行います。
+  ///
   Future<void> _onDoneButtonClicked(BuildContext context) async {
     final result =
         await IrohaCommonDialog.showConfirm(context, '本当にこの注文のお届けは終わりましたか?');
@@ -51,6 +70,9 @@ class IrohaOrderView extends StatelessWidget {
     }
   }
 
+  ///
+  /// 枠内のUIの構築を行います。
+  ///
   Widget _buildContent(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,

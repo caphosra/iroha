@@ -4,9 +4,18 @@ import 'package:iroha/models/order.dart';
 import 'package:iroha/widgets/header.dart';
 import 'package:iroha/widgets/orders-board/order-view.dart';
 
+///
+/// 注文の表示を並べるUI
+///
 class IrohaOrdersListView extends StatefulWidget {
+  ///
+  /// 追加ボタンが押された時の処理
+  ///
   final void Function() onAddButtonClicked;
 
+  ///
+  /// 注文の表示を並べるUI
+  ///
   IrohaOrdersListView({required this.onAddButtonClicked, Key? key})
       : super(key: key);
 
@@ -14,6 +23,9 @@ class IrohaOrdersListView extends StatefulWidget {
   _IrohaOrdersListViewState createState() => _IrohaOrdersListViewState();
 }
 
+///
+/// [IrohaOrdersListView] の状態
+///
 class _IrohaOrdersListViewState extends State<IrohaOrdersListView> {
   @override
   Widget build(BuildContext context) {
@@ -45,6 +57,9 @@ class _IrohaOrdersListViewState extends State<IrohaOrdersListView> {
     });
   }
 
+  ///
+  /// 全ての注文をUIの状態で取得します。
+  ///
   Widget _getAllOrders(List<IrohaOrder> orders) {
     final counter = Map<String, int>();
     for (final order in orders) {
@@ -54,7 +69,7 @@ class _IrohaOrdersListViewState extends State<IrohaOrdersListView> {
       }
     }
     final data = IrohaOrder(
-        id: "top", posted: DateTime.now(), tableNumber: 0, foods: counter);
+        id: 'top', posted: DateTime.now(), tableNumber: 0, foods: counter);
     return IrohaOrderView(
         data: data,
         onListChanged: () {},
@@ -63,6 +78,9 @@ class _IrohaOrdersListViewState extends State<IrohaOrdersListView> {
         showButtons: false);
   }
 
+  ///
+  /// 注文のリストが更新された時の処理を行います。
+  ///
   onListChanged() {
     setState(() {});
   }
