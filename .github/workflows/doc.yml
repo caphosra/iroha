@@ -1,0 +1,44 @@
+name: Documents Generation
+
+on:
+  push:
+    tags:
+    - "v*"
+    branches:
+    - feature/doc-test
+
+jobs:
+  doc:
+    name: Documents Generation
+    runs-on: ubuntu-latest
+    steps:
+    # Setup environment
+    - uses: actions/checkout@v2
+      name: Checkout
+      with:
+        submodules: true
+        lfs: true
+    - uses: actions/setup-java@v2
+      name: Setup Java 11
+      with:
+        distribution: temurin
+        java-version: 11
+    - uses: subosito/flutter-action@v1
+      name: Setup Flutter
+      with:
+        channel: stable
+    - run: flutter pub get
+      name: Install packages
+    - run: flutter pub global activate dartdoc
+      name: Activate dartdoc
+
+    # Generate documents
+    - run: flutter pub global run dartdoc
+      name: Generate documents
+
+    # Publish documents
+    - uses: peaceiris/actions-gh-pages@v3
+      name: Publish to GitHub Pages
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./doc/api

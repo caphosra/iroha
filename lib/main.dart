@@ -8,12 +8,12 @@ import 'package:iroha/models/config.dart';
 import 'package:iroha/models/device-manager.dart';
 import 'package:iroha/models/menu-items.dart';
 import 'package:iroha/widgets/bottom-bar.dart';
-import 'package:iroha/widgets/cashier/main.dart';
-import 'package:iroha/widgets/cooked-board/main.dart';
-import 'package:iroha/widgets/home/main.dart';
-import 'package:iroha/widgets/orders-board/main.dart';
-import 'package:iroha/widgets/settings/main.dart';
-import 'package:iroha/widgets/take-out/main.dart';
+import 'package:iroha/widgets/cashier/cashier.dart';
+import 'package:iroha/widgets/cooked-board/cooked-board.dart';
+import 'package:iroha/widgets/home/home.dart';
+import 'package:iroha/widgets/orders-board/orders-board.dart';
+import 'package:iroha/widgets/settings/settings.dart';
+import 'package:iroha/widgets/take-out/take-out.dart';
 
 ///
 /// 全てのIrohaの原点

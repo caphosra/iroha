@@ -62,7 +62,7 @@ class MenuItems {
   MenuItems({required this.kind});
 
   ///
-  /// **[非同期]** メニューのリストをサーバーから取得します。
+  /// **(非同期)** メニューのリストをサーバーから取得します。
   ///
   Future<void> update() async {
     final ref = FirebaseDatabase.instance.reference();

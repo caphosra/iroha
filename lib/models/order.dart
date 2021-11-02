@@ -219,7 +219,7 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
       : super(initial ?? []);
 
   ///
-  /// **[非同期]** サーバーに注文を追加します。
+  /// **(非同期)** サーバーに注文を追加します。
   ///
   Future<void> add(int tableNumber, Map<String, int> foods) async {
     final uuid = Uuid().v4();
@@ -233,7 +233,7 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
   }
 
   ///
-  /// **[非同期]** サーバーにある注文を削除します。
+  /// **(非同期)** サーバーにある注文を削除します。
   ///
   Future<void> delete(String id) async {
     final ref = FirebaseDatabase.instance.reference();
@@ -241,14 +241,14 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
   }
 
   ///
-  /// **[非同期]** サーバーにあるデータを読み込みます。
+  /// **(非同期)** サーバーにあるデータを読み込みます。
   ///
   Future<void> update() async {
     state = await _downloadData();
   }
 
   ///
-  /// **[非同期]** 注文の状態を変更します。
+  /// **(非同期)** 注文の状態を変更します。
   ///
   Future<void> markAs(String id, IrohaOrderStatus status, DateTime time) async {
     final ref = FirebaseDatabase.instance.reference();
@@ -268,7 +268,7 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
   }
 
   ///
-  /// **[非同期]** サーバーにある注文を全て削除します。
+  /// **(非同期)** サーバーにある注文を全て削除します。
   ///
   Future<void> resetAll() async {
     final ref = FirebaseDatabase.instance.reference();
@@ -276,7 +276,7 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
   }
 
   ///
-  /// **[非同期]** 注文が変更されていないか監視し、変更があれば更新します。
+  /// **(非同期)** 注文が変更されていないか監視し、変更があれば更新します。
   ///
   Future<void> keepWatching() async {
     final ref = FirebaseDatabase.instance.reference();
@@ -288,7 +288,7 @@ class IrohaOrderList extends StateNotifier<List<IrohaOrder>> {
   }
 
   ///
-  /// **[非同期]** サーバーにあるデータを読み込みます。
+  /// **(非同期)** サーバーにあるデータを読み込みます。
   ///
   /// [IrohaOrderList.update] と違い、更新は行いません。
   ///

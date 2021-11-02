@@ -38,7 +38,7 @@ class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
   }
 
   ///
-  /// **[非同期]** 注文を追加するモードに切り替えます。
+  /// **(非同期)** 注文を追加するモードに切り替えます。
   ///
   Future<void> _changeEditMode(BuildContext context) async {
     await showDialog(
@@ -74,7 +74,7 @@ class _IrohaOrdersBoardState extends State<IrohaOrdersBoard> {
   }
 
   ///
-  /// **[非同期]** 追加ボタンが押された時の処理を行います。
+  /// **(非同期)** 追加ボタンが押された時の処理を行います。
   ///
   Future<void> _onAddButtonClicked(
       BuildContext context, ScopedReader watch) async {
