@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:iroha/widgets/common-dialog.dart';
+import 'package:iroha/widgets/dialog.dart';
 import 'package:iroha/widgets/foods-table.dart';
 import 'package:iroha/widgets/orders-board/order-button.dart';
 import 'package:iroha/models/order.dart';
@@ -45,7 +45,7 @@ class IrohaOrderView extends StatelessWidget {
   ///
   Future<void> _onDeleteButtonClicked(BuildContext context) async {
     final result =
-        await IrohaCommonDialog.showConfirm(context, '本当にこの注文を削除しますか?');
+        await IrohaDialog.showConfirm(context, '本当にこの注文を削除しますか?');
 
     if (result) {
       context.read(eatInOrdersProvider.notifier).delete(data.id);
@@ -59,7 +59,7 @@ class IrohaOrderView extends StatelessWidget {
   ///
   Future<void> _onDoneButtonClicked(BuildContext context) async {
     final result =
-        await IrohaCommonDialog.showConfirm(context, '本当にこの注文のお届けは終わりましたか?');
+        await IrohaDialog.showConfirm(context, '本当にこの注文のお届けは終わりましたか?');
 
     if (result) {
       context

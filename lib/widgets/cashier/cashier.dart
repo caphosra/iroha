@@ -3,8 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iroha/models/config.dart';
 import 'package:iroha/models/order-kind.dart';
 import 'package:iroha/models/order.dart';
-import 'package:iroha/widgets/cashier-dialog.dart';
-import 'package:iroha/widgets/common-dialog.dart';
+import 'package:iroha/widgets/dialog.dart';
 import 'package:iroha/widgets/header.dart';
 
 ///
@@ -80,7 +79,7 @@ class _IrohaCashierState extends State<IrohaCashier> {
       }
     }
 
-    final isPaid = await IrohaCashierDialog.show(
+    final isPaid = await IrohaDialog.showCashier(
         context,
         IrohaFoodCount.toList(foods),
         IrohaFoodCount.getPrice(foods, IrohaOrderKind.EAT_IN));
@@ -92,7 +91,7 @@ class _IrohaCashierState extends State<IrohaCashier> {
             .markAs(order.id, IrohaOrderStatus.PAID, DateTime.now());
       }
 
-      await IrohaCommonDialog.showDone(context, 'サーバーに送信しました。');
+      await IrohaDialog.showDone(context, 'サーバーに送信しました。');
     }
   }
 }

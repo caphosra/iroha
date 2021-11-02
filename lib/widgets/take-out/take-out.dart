@@ -3,8 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iroha/models/menu-items.dart';
 import 'package:iroha/models/order-kind.dart';
 import 'package:iroha/models/order.dart';
-import 'package:iroha/widgets/cashier-dialog.dart';
-import 'package:iroha/widgets/common-dialog.dart';
+import 'package:iroha/widgets/dialog.dart';
 import 'package:iroha/widgets/foods-table.dart';
 import 'package:iroha/widgets/header.dart';
 
@@ -89,7 +88,7 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
   /// 支払いボタンを押した時の処理
   ///
   Future<void> _onPaymentButtonClicked() async {
-    final isPaid = await IrohaCashierDialog.show(
+    final isPaid = await IrohaDialog.showCashier(
         context,
         IrohaFoodCount.toList(_menuItemCounter),
         IrohaFoodCount.getPrice(_menuItemCounter, IrohaOrderKind.TAKE_OUT));
@@ -99,7 +98,7 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
           .read(takeOutOrdersProvider.notifier)
           .add(1, _menuItemCounter);
 
-      await IrohaCommonDialog.showDone(context, 'サーバーに送信しました。');
+      await IrohaDialog.showDone(context, 'サーバーに送信しました。');
     }
   }
 }
