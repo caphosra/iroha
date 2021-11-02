@@ -9,4 +9,6 @@
 
 喫茶班において伝票をウェイター、厨房、会計で共有する為のスマホアプリです。
 
+ビルド方法は[how_to_build.md](https://github.com/capra314cabra/iroha/blob/master/doc/how_to_build.md)に記してあります。
+
 旧デザイン版は [iroha-expo](https://github.com/capra314cabra/iroha-expo) へ移動しました。
