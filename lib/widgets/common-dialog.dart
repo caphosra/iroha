@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
+///
+/// Irohaの実装でよく使われるダイアログ
+///
 class IrohaCommonDialog {
+  ///
+  /// 完了を確認するダイアログを表示します。
+  ///
   static Future<void> showDone(BuildContext context, String text) async {
     await showDialog(
         context: context,
@@ -18,6 +24,9 @@ class IrohaCommonDialog {
         });
   }
 
+  ///
+  /// "はい"と"いいえ"の意志確認するダイアログを表示します。
+  ///
   static Future<bool> showConfirm(BuildContext context, String text) async {
     final bool result = await showDialog(
         context: context,

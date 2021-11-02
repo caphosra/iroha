@@ -5,16 +5,31 @@ import 'package:flutter/material.dart';
 import 'package:iroha/models/menu-items.dart';
 import 'package:iroha/models/order-kind.dart';
 
+///
+/// メニューを編集するためのUI
+///
 class IrohaMenuViewer extends StatefulWidget {
+  ///
+  /// メニューを編集するためのUI
+  ///
   const IrohaMenuViewer({Key? key}) : super(key: key);
 
   @override
   _IrohaMenuViewerState createState() => _IrohaMenuViewerState();
 }
 
+///
+/// [IrohaMenuViewer] の状態
+///
 class _IrohaMenuViewerState extends State<IrohaMenuViewer> {
+  ///
+  /// メニューのリスト
+  ///
   List<IrohaMenuItem> _menuItems = [];
 
+  ///
+  /// UIの初期化を行います。
+  ///
   @override
   void initState() {
     _menuItems = MenuItems.getMenu(IrohaOrderKind.TAKE_OUT).items;
@@ -50,6 +65,9 @@ class _IrohaMenuViewerState extends State<IrohaMenuViewer> {
                 showCreateButton: true)));
   }
 
+  ///
+  /// 表の横幅を取得します。
+  ///
   double _getWidthFactor(double val) {
     final screenWidth = MediaQuery.of(context).size.width;
     return val * min(500, screenWidth) / screenWidth;

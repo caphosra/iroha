@@ -15,6 +15,9 @@ import 'package:iroha/widgets/orders-board/main.dart';
 import 'package:iroha/widgets/settings/main.dart';
 import 'package:iroha/widgets/take-out/main.dart';
 
+///
+/// 全てのIrohaの原点
+///
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -26,6 +29,9 @@ Future<void> main() async {
   runApp(IrohaApp());
 }
 
+///
+/// Irohaの最上層
+///
 class IrohaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -38,19 +44,33 @@ class IrohaApp extends StatelessWidget {
   }
 }
 
-class IrohaAppView extends StatefulWidget {
-  IrohaAppView({Key? key}) : super(key: key);
-
-  @override
-  _IrohaAppViewState createState() => _IrohaAppViewState();
-}
-
+///
+/// ページの情報
+///
 class IrohaPage {
+  ///
+  /// ページのタイトル
+  ///
   final String title;
+
+  ///
+  /// ページのアイコン
+  ///
   final IconData icon;
+
+  ///
+  /// ページのUI
+  ///
   final Widget widget;
+
+  ///
+  /// 管理者版でのみ使えるかどうか
+  ///
   final bool isAdminOnly;
 
+  ///
+  /// ページの情報
+  ///
   IrohaPage(
       {required this.title,
       required this.icon,
@@ -58,7 +78,26 @@ class IrohaPage {
       this.isAdminOnly = false});
 }
 
+///
+/// Irohaのトップページ
+///
+class IrohaAppView extends StatefulWidget {
+  ///
+  /// Irohaのトップページ
+  ///
+  IrohaAppView({Key? key}) : super(key: key);
+
+  @override
+  _IrohaAppViewState createState() => _IrohaAppViewState();
+}
+
+///
+/// [IrohaAppView] の状態
+///
 class _IrohaAppViewState extends State<IrohaAppView> {
+  ///
+  /// ページのリスト
+  ///
   static List<IrohaPage> _items = [
     IrohaPage(title: 'ホーム', icon: Icons.home, widget: IrohaHome()),
     IrohaPage(
@@ -79,7 +118,10 @@ class _IrohaAppViewState extends State<IrohaAppView> {
         isAdminOnly: true)
   ];
 
-  int _selectedIndex = 0;
+  ///
+  /// 選ばれているページ
+  ///
+  var _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +142,9 @@ class _IrohaAppViewState extends State<IrohaAppView> {
         backgroundColor: Colors.white);
   }
 
+  ///
+  /// ページが選ばれている時の処理
+  ///
   void _onSelected(int index) {
     setState(() {
       _selectedIndex = index;

@@ -7,14 +7,26 @@ import 'package:iroha/widgets/cashier-dialog.dart';
 import 'package:iroha/widgets/common-dialog.dart';
 import 'package:iroha/widgets/header.dart';
 
+///
+/// 会計を行うUI
+///
 class IrohaCashier extends StatefulWidget {
+  ///
+  /// 会計を行うUI
+  ///
   IrohaCashier({Key? key}) : super(key: key);
 
   @override
   _IrohaCashierState createState() => _IrohaCashierState();
 }
 
+///
+/// [IrohaCashier] の状態
+///
 class _IrohaCashierState extends State<IrohaCashier> {
+  ///
+  /// 会計をするテーブル番号
+  ///
   int _tableNumber = 1;
 
   @override
@@ -25,7 +37,7 @@ class _IrohaCashierState extends State<IrohaCashier> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: DropdownButton<int>(
                     value: _tableNumber,
                     items: [
@@ -46,12 +58,15 @@ class _IrohaCashierState extends State<IrohaCashier> {
 
               return TextButton(
                   onPressed: () => onPaymentButtonPressed(context, orders),
-                  child: Text('支払いへ進む', style: TextStyle(fontSize: 15)));
+                  child: const Text('支払いへ進む', style: TextStyle(fontSize: 15)));
             })
           ])
     ]);
   }
 
+  ///
+  /// **[非同期]** 支払いを行うボタンが押された時の処理をします。
+  ///
   Future<void> onPaymentButtonPressed(
       BuildContext context, List<IrohaOrder> orders) async {
     orders = orders
@@ -65,7 +80,7 @@ class _IrohaCashierState extends State<IrohaCashier> {
       }
     }
 
-    bool isPaid = await IrohaCashierDialog.show(
+    final isPaid = await IrohaCashierDialog.show(
         context,
         IrohaFoodCount.toList(foods),
         IrohaFoodCount.getPrice(foods, IrohaOrderKind.EAT_IN));

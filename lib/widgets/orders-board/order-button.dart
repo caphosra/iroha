@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 
+///
+/// 注文において使われるボタンを描画するUI
+///
 class IrohaOrderButton extends StatelessWidget {
+  ///
+  /// ボタンのアイコン
+  ///
   final IconData icon;
+
+  ///
+  /// ボタンの色
+  ///
   final Color color;
+
+  ///
+  /// ボタンが押された時の処理
+  ///
   final void Function() onPressed;
 
-  IrohaOrderButton(
+  ///
+  /// 注文において使われるボタンを描画するUI
+  ///
+  const IrohaOrderButton(
       {required this.icon,
       required this.color,
       required this.onPressed,
@@ -16,9 +33,9 @@ class IrohaOrderButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Container(
-            padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+            padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
             child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
                 child: Container(
                     color: color,
                     child: TextButton(

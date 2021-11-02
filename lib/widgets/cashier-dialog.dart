@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:iroha/models/order.dart';
 import 'package:iroha/widgets/foods-table.dart';
 
+///
+/// 会計を行うダイアログ
+///
 class IrohaCashierDialog {
+  ///
+  /// 会計を行うダイアログを表示します。
+  ///
   static Future<bool> show(
       BuildContext context, List<IrohaFoodCount> items, int price) async {
-    bool isPaid = await showDialog(
+    final bool isPaid = await showDialog(
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
@@ -34,6 +40,9 @@ class IrohaCashierDialog {
     return isPaid;
   }
 
+  ///
+  /// 表の中身を生成します。
+  ///
   static Widget _buildTable(BuildContext context, IrohaFoodCount food) {
     return Text(food.count.toString(), style: TextStyle(fontSize: 15));
   }

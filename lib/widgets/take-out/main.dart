@@ -8,31 +8,31 @@ import 'package:iroha/widgets/common-dialog.dart';
 import 'package:iroha/widgets/foods-table.dart';
 import 'package:iroha/widgets/header.dart';
 
+///
+/// 持ち帰りの注文を受け付けるUI
+///
 class IrohaTakeOut extends StatefulWidget {
+  ///
+  /// 持ち帰りの注文を受け付けるUI
+  ///
   IrohaTakeOut({Key? key}) : super(key: key);
 
   @override
   _IrohaTakeOutState createState() => _IrohaTakeOutState();
 }
 
+///
+/// [IrohaTakeOut] の状態
+///
 class _IrohaTakeOutState extends State<IrohaTakeOut> {
-  final Map<String, int> _menuItemCounter = <String, int>{};
+  ///
+  /// 注文されたメニューの個数
+  ///
+  final Map<String, int> _menuItemCounter = {};
 
-  @override
-  Widget build(BuildContext context) {
-    return IrohaWithHeader(text: '持ち帰り', children: [
-      Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildFoodsTable(context),
-            TextButton(
-                onPressed: _onPaymentButtonClicked,
-                child: Text('支払いへ進む', style: TextStyle(fontSize: 15)))
-          ])
-    ]);
-  }
-
+  ///
+  /// UIの初期化を行います。
+  ///
   @override
   void initState() {
     super.initState();
@@ -46,6 +46,24 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
     setState(() {});
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return IrohaWithHeader(text: '持ち帰り', children: [
+      Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildFoodsTable(context),
+            TextButton(
+                onPressed: _onPaymentButtonClicked,
+                child: const Text('支払いへ進む', style: TextStyle(fontSize: 15)))
+          ])
+    ]);
+  }
+
+  ///
+  /// 食材の表を生成します。
+  ///
   Widget _buildFoodsTable(BuildContext context) {
     return IrohaFoodsTable(
         data: takeOutMenuItems.items.map((item) => item.name).toList(),
@@ -67,6 +85,9 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
         });
   }
 
+  ///
+  /// 支払いボタンを押した時の処理
+  ///
   Future<void> _onPaymentButtonClicked() async {
     final isPaid = await IrohaCashierDialog.show(
         context,

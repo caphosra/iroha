@@ -3,7 +3,13 @@ import 'package:iroha/models/config.dart';
 import 'package:iroha/models/menu-items.dart';
 import 'package:iroha/widgets/foods-table.dart';
 
+///
+/// 注文を作成する為のUI
+///
 class IrohaOrderEditor extends StatefulWidget {
+  ///
+  /// 注文が更新された時の処理
+  ///
   final void Function(int tableNumber, Map<String, int> order) onOrderUpdated;
 
   IrohaOrderEditor({required this.onOrderUpdated, Key? key}) : super(key: key);
@@ -12,26 +18,19 @@ class IrohaOrderEditor extends StatefulWidget {
   _IrohaOrderEditorState createState() => _IrohaOrderEditorState();
 }
 
+///
+/// [IrohaOrderEditor] の状態
+///
 class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
+  ///
+  /// テーブル番号
+  ///
   int _tableNumber = 1;
-  final Map<String, int> _menuItemCounter = <String, int>{};
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.2,
-              child: _buildTableDropDown(context),
-            ),
-            Text('番テーブル', style: TextStyle(fontSize: 15))
-          ]),
-          _buildFoodsTable(context)
-        ]);
-  }
+  ///
+  /// メニューと個数のリスト
+  ///
+  final Map<String, int> _menuItemCounter = {};
 
   @override
   void initState() {
@@ -46,22 +45,39 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
     widget.onOrderUpdated(_tableNumber, _menuItemCounter);
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(
+              width: 30,
+              child: _buildTableDropDown(context),
+            ),
+            const Text('番テーブル', style: TextStyle(fontSize: 15))
+          ]),
+          _buildFoodsTable(context)
+        ]);
+  }
+
+  ///
+  /// 個数を選択するドロップダウンを生成します。
+  ///
   Widget _buildTableDropDown(BuildContext context) {
     return DropdownButton<int>(
         value: _tableNumber,
         isExpanded: true,
         items: [
-          for (int i = 1; i <= IrohaConfig.tableCount; i++)
+          for (var i = 1; i <= IrohaConfig.tableCount; i++)
             DropdownMenuItem(
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Text(
-                    i.toString(),
-                    style: TextStyle(fontSize: 15),
-                    textAlign: TextAlign.right,
-                  )),
-              value: i,
-            )
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(i.toString(),
+                        style: TextStyle(fontSize: 15),
+                        textAlign: TextAlign.right)),
+                value: i)
         ],
         onChanged: (value) {
           setState(() {
@@ -72,6 +88,9 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
         });
   }
 
+  ///
+  /// メニューと個数の表を生成します。
+  ///
   Widget _buildFoodsTable(BuildContext context) {
     return IrohaFoodsTable(
         data: eatInMenuItems.items.map((item) => item.name).toList(),
@@ -79,11 +98,10 @@ class _IrohaOrderEditorState extends State<IrohaOrderEditor> {
           return DropdownButton<int>(
               value: _menuItemCounter[item],
               items: [
-                for (int i = 0; i <= 5; i++)
+                for (var i = 0; i <= 5; i++)
                   DropdownMenuItem(
-                    child: Text(i.toString(), style: TextStyle(fontSize: 15)),
-                    value: i,
-                  )
+                      child: Text(i.toString(), style: TextStyle(fontSize: 15)),
+                      value: i)
               ],
               onChanged: (value) {
                 setState(() {
