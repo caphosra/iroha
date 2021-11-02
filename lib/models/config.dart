@@ -10,7 +10,7 @@ class IrohaConfig {
   static var tableCount = 0;
 
   ///
-  /// サーバーにある設定を反映します。
+  /// **(非同期)** サーバーにある設定を反映します。
   ///
   static Future<void> update() async {
     final ref = FirebaseDatabase.instance.reference();

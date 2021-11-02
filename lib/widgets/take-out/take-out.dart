@@ -85,7 +85,7 @@ class _IrohaTakeOutState extends State<IrohaTakeOut> {
   }
 
   ///
-  /// 支払いボタンを押した時の処理
+  /// **(非同期)** 支払いボタンを押した時の処理を行います。
   ///
   Future<void> _onPaymentButtonClicked() async {
     final isPaid = await IrohaDialog.showCashier(

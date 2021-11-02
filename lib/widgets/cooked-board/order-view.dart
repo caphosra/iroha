@@ -41,11 +41,10 @@ class IrohaOrderView extends StatelessWidget {
   }
 
   ///
-  /// 注文の削除ボタンが押された時の処理を行います。
+  /// **(非同期)** 注文の削除ボタンが押された時の処理を行います。
   ///
   Future<void> _onDeleteButtonClicked(BuildContext context) async {
-    final result =
-        await IrohaDialog.showConfirm(context, '本当にこの注文を削除しますか?');
+    final result = await IrohaDialog.showConfirm(context, '本当にこの注文を削除しますか?');
 
     if (result) {
       context.read(eatInOrdersProvider.notifier).delete(data.id);
@@ -55,7 +54,7 @@ class IrohaOrderView extends StatelessWidget {
   }
 
   ///
-  /// 注文の完了ボタンが押された時の処理を行います。
+  /// **(非同期)** 注文の完了ボタンが押された時の処理を行います。
   ///
   Future<void> _onDoneButtonClicked(BuildContext context) async {
     final result =

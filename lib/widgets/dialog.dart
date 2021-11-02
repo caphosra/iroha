@@ -7,7 +7,7 @@ import 'package:iroha/widgets/foods-table.dart';
 ///
 class IrohaDialog {
   ///
-  /// 完了を確認するダイアログを表示します。
+  /// **(非同期)** 完了を確認するダイアログを表示します。
   ///
   static Future<void> showDone(BuildContext context, String text) async {
     await showDialog(
@@ -27,7 +27,7 @@ class IrohaDialog {
   }
 
   ///
-  /// "はい"と"いいえ"の意志確認するダイアログを表示します。
+  /// **(非同期)** "はい"と"いいえ"の意志確認するダイアログを表示します。
   ///
   static Future<bool> showConfirm(BuildContext context, String text) async {
     final bool result = await showDialog(
@@ -54,7 +54,7 @@ class IrohaDialog {
   }
 
   ///
-  /// 会計を行うダイアログを表示します。
+  /// **(非同期)** 会計を行うダイアログを表示します。
   ///
   static Future<bool> showCashier(
       BuildContext context, List<IrohaFoodCount> items, int price) async {

@@ -64,7 +64,7 @@ class _IrohaCashierState extends State<IrohaCashier> {
   }
 
   ///
-  /// **[非同期]** 支払いを行うボタンが押された時の処理をします。
+  /// **(非同期)** 支払いを行うボタンが押された時の処理をします。
   ///
   Future<void> onPaymentButtonPressed(
       BuildContext context, List<IrohaOrder> orders) async {
